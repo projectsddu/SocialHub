@@ -1,0 +1,84 @@
+{% extends 'home/base.html' %} {% block feed %}
+<div class="container">
+  <div class="card cont" style="width: 500px">
+    <div class="row" style="height: 60px; padding: 10px">
+      <div class="col-1">
+        <img
+          src="https://source.unsplash.com/1600x900/?nature,mountain"
+          class="rounded-circle"
+          style="height: 40px; width: 40px"
+        />
+      </div>
+      <div class="col-4" style="padding-left: 30px">
+        <div class="col">
+          <div class="row-6">
+            <b>Jenil Gandhi</b>
+          </div>
+          <div class="row-6">
+            <p style="font-size: 12px">Ahmedabad India</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img
+      src="https://source.unsplash.com/1600x900/?nature,water"
+      style="height: 400px"
+      class="card-img-top rounded-0"
+      alt="..."
+    />
+    <div class="card-body">
+      <div class="col">
+        <div class="row-4">
+          <div class="row">
+            <div class="heart col-1">
+              <i id="p1" class="far fa-heart fa-lg"></i>
+            </div>
+            <div class="comment col-1 fa-lg" id="post1">
+              <i class="far fa-comment"></i>
+            </div>
+          </div>
+        </div>
+        <div class="row-2"><b>Liked By these users</b></div>
+        <div class="caption row-2">Roses are red violets are blue let's smash the patriachy me and you</div>
+        <div class="commentsslide row-2">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <form>
+                <div class="row">
+                  <div class="col-10">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Comment your thoughts"
+                      aria-label="readonly input example"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <i
+                      class="fa fa-send"
+                      style="font-size: 24px; padding-top: 7px"
+                    ></i>
+                  </div>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">
+              <b>Username</b><p>Jenil has commented</p>
+            </li>
+            <li class="list-group-item">
+              <b>Username</b><p>Jenil has commented</p>
+            </li>
+            <li class="list-group-item">
+              <b>Username</b><p>Jenil has commented</p>
+            </li>
+            <li class="list-group-item">
+              <b>Username</b><p>Jenil has commented</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+{% endblock feed %}
