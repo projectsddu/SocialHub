@@ -2,8 +2,8 @@
 
 
 <div class="container">
-  {% for i in '0123456'|make_list %}
-  <div class="card cont" style="width: 500px">
+  {% for i in '123456'|make_list %}
+  <div class="card cont " id="pid{{i}}" style="width: 500px">
     <div class="row" style="height: 60px; padding: 10px">
       <div class="col-1">
         <img
@@ -15,7 +15,7 @@
       <div class="col-4" style="padding-left: 30px">
         <div class="col">
           <div class="row-6">
-            <b>Jenil Gandhi</b>
+            <b>{{i}}</b>
           </div>
           <div class="row-6">
             <p style="font-size: 12px">Ahmedabad India</p>

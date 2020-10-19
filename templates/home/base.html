@@ -28,7 +28,9 @@
       />
     </head>
 
-    <nav class=" fixed navbar nav1 mb-3 fixed navbar-expand-lg navbar-light bg-light">
+    <nav
+      class="fixed navbar nav1 mb-3 fixed navbar-expand-lg navbar-light bg-light"
+    >
       <div class="container-fluid navi">
         <a class="navbar-brand" href="#"
           ><p class="display-3" style="font-size: 30px; margin: 10px">
@@ -69,8 +71,7 @@
                 aria-expanded="false"
                 style="font-size: 20px"
               >
-                {% block user_name %}
-                {% endblock user_name %}
+                <div id="usnm">{% block user_name %}{% endblock user_name %}</div>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Action</a></li>
@@ -83,9 +84,19 @@
             </li>
           </ul>
           <form class="d-flex">
-        <input class="form-control mr-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline rounded-pill sub-button" type="submit">Search</button>
-      </form>
+            <input
+              class="form-control mr-2 rounded-pill"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline rounded-pill sub-button"
+              type="submit"
+            >
+              Search
+            </button>
+          </form>
         </div>
       </div>
     </nav>

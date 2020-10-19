@@ -20,6 +20,8 @@ def add_like_to_post(request):
 
 @csrf_exempt
 def add_unlike_to_post(request):
+
+    #just check the unliker name as in reponsive we were getting \n\n jenil \n\n just remove \n
     if request.method =='POST': 
         print(request.POST)
         return HttpResponse("recieved post")
