@@ -2,9 +2,13 @@ $(document).ready(function () {
     $('.commentsslide').slideUp(1)
     $('.comment').click(
         function () {
+            var id=this.id
+            id=String(id)
+            var final_id=id.match(/\d+/g);
+            console.log(final_id[0]); 
             var myKeyVals = { 'post_id':this.id}
 
-            $('.commentsslide').slideToggle(400)
+            $('#'+'comment'+final_id[0]).slideToggle(400)
             var saveData = $.ajax({
                 type: 'POST',
                 url: "http://127.0.0.1:8000/home/comments/",
@@ -15,8 +19,8 @@ $(document).ready(function () {
             saveData.error(function () { alert("Something went wrong"); });
         }
     )
-    for (let i = 0; i < 3; i++) {
-        $('#p' + i).click(function () {
+    
+        $('.heart_target').click(function () {
             //toggling the heart button
             if (this.classList.contains('far')) {
                 this.classList.remove('far')
@@ -43,7 +47,7 @@ $(document).ready(function () {
             else {
                 this.classList.remove('fas')
                 this.classList.add('far')
-                var myKeyVals = { 'author_name': 'authors_name', 'unliker_name': 'liker', 'time_liked': Date.now(), 'post_unliked': 'id_of_post' }
+                var myKeyVals = { 'author_name': 'authors_name', 'unliker_name': 'liker', 'time_unliked': Date.now(), 'post_unliked': 'id_of_post' }
 
 
 
@@ -60,7 +64,7 @@ $(document).ready(function () {
             }
         })
     }
-})
+)
 
 
 

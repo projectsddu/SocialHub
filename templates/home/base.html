@@ -69,7 +69,8 @@
                 aria-expanded="false"
                 style="font-size: 20px"
               >
-                Dropdown
+                {% block user_name %}
+                {% endblock user_name %}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Action</a></li>
@@ -81,6 +82,10 @@
               </ul>
             </li>
           </ul>
+          <form class="d-flex">
+        <input class="form-control mr-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline rounded-pill sub-button" type="submit">Search</button>
+      </form>
         </div>
       </div>
     </nav>

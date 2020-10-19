@@ -3,7 +3,12 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 def index(request):
-    return render(request,'home/home.html')
+    user_name=request.user
+    print(user_name.username)
+    user_details_dict={
+        'name':str(user_name.username)
+    }
+    return render(request,'home/home.html',user_details_dict)
 
 @csrf_exempt
 def add_like_to_post(request):

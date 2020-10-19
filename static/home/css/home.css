@@ -21,3 +21,11 @@ body{
     border: 0;
     outline: #fbad50;
 }
+.sub-button{
+    color:white;
+    background-image:linear-gradient(to left,#667eea,#764ba2);
+    border: chartreuse;
+    /* font-color: */
+    /* #a1c4fd → #c2e9fb */
+   
+}
