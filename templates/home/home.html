@@ -1,31 +1,31 @@
 {% extends 'home/base.html' %} {% block feed %}
 
-
-<div class="container">
-  {% for i in '123456'|make_list %}
-  <div class="card cont " id="pid{{i}}" style="width: 500px">
+<div class="container" style="font-family:'Roboto'">
+  {% comment %} {{posts}} {% endcomment %}
+  {% for i in posts %}
+  <div class="card cont my-3" id="pid{{i.post_id}}" style="width: 500px">
     <div class="row" style="height: 60px; padding: 10px">
       <div class="col-1">
         <img
-          src="https://source.unsplash.com/1600x900/?nature,mountain"
+          src="{{i.poster_image_url}}"
           class="rounded-circle"
           style="height: 40px; width: 40px"
         />
       </div>
-      <div class="col-4" style="padding-left: 30px">
+      <div class="col-9" style="padding-left: 30px">
         <div class="col">
           <div class="row-6">
-            <b>{{i}}</b>
+            <b>{{i.owner}}</b>
           </div>
           <div class="row-6">
-            <p style="font-size: 12px">Ahmedabad India</p>
+            <p style="font-size: 12px">{{i.location}}</p>
           </div>
         </div>
       </div>
     </div>
     <img
-      src="https://source.unsplash.com/1600x900/?nature,water"
-      style="height: 400px"
+      src="{{i.image_url}}"
+      style="height: {{i.image_url.height}}px"
       class="card-img-top rounded-0"
       alt="..."
     />
@@ -34,17 +34,27 @@
         <div class="row-4">
           <div class="row">
             <div class="heart col-1">
-              <i id="heart{{forloop.counter}}" class="heart_target far fa-heart fa-lg"></i>
+              <i
+                id="heart{{i.post_id}}"
+                {% if i.isliked %}
+                  class="heart_target fas fa-heart fa-lg"
+                {% else %}
+                  class="heart_target far fa-heart fa-lg"
+                {% endif %}
+                
+              ></i>
             </div>
-            <div class="comment col-1 fa-lg" id="post{{forloop.counter}}">
+            <div class="comment col-1 fa-lg" id="post{{i.post_id}}">
               <i class="far fa-comment"></i>
             </div>
           </div>
         </div>
-        <div class="row-2"><b>Liked By these users</b></div>
-        <div class="caption row-2">Roses are red violets are blue let's smash the patriachy me and you</div>
-        <div class="commentsslide row-2" id="comment{{forloop.counter}}">
-          <ul class="list-group">
+        <div class="row-2">Liked By <b>{{i.likedby}}</b></div>
+        <div class="caption row-2">
+          {{i.caption}}
+        </div>
+        <div class="commentsslide row-2" id="comment{{i.post_id}}">
+          <ul class="list-group" id="commentlist{{i.post_id}}">
             <li class="list-group-item">
               <form>
                 <div class="row">
@@ -52,132 +62,39 @@
                     <input
                       class="form-control"
                       type="text"
+                      id="addcomment{{i.post_id}}"
                       placeholder="Comment your thoughts"
                       aria-label="readonly input example"
                     />
                   </div>
                   <div class="col-2">
                     <i
-                      class="fa fa-send"
+                      class="fa fa-send send_icon"
+                      id="send{{i.post_id}}"
                       style="font-size: 24px; padding-top: 7px"
                     ></i>
                   </div>
                 </div>
               </form>
             </li>
+            {% if i.comments %}
+              {% for comment in i.comments %}
+            
+
             <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
+              <p style="margin-top:3px;margin-bottom:3px"><b>{{comment.name}}</b> {{comment.comment}}</p>
             </li>
-            <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
-            </li>
-            <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
-            </li>
-            <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
-            </li>
+            {% endfor %}
+              
+            
+            {% endif %}
           </ul>
+         
         </div>
       </div>
     </div>
   </div>
   {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- <div class="card cont" style="width: 500px">
-    <div class="row" style="height: 60px; padding: 10px">
-      <div class="col-1">
-        <img
-          src="https://source.unsplash.com/1600x900/?nature,mountain"
-          class="rounded-circle"
-          style="height: 40px; width: 40px"
-        />
-      </div>
-      <div class="col-4" style="padding-left: 30px">
-        <div class="col">
-          <div class="row-6">
-            <b>Jenil Gandhi</b>
-          </div>
-          <div class="row-6">
-            <p style="font-size: 12px">Ahmedabad India</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <img
-      src="https://source.unsplash.com/1600x900/?nature,water"
-      style="height: 400px"
-      class="card-img-top rounded-0"
-      alt="..."
-    />
-    <div class="card-body">
-      <div class="col">
-        <div class="row-4">
-          <div class="row">
-            <div class="heart col-1">
-              <i id="heart2" class="heart_target far fa-heart fa-lg"></i>
-            </div>
-            <div class="comment col-1 fa-lg" id="post2">
-              <i class="far fa-comment"></i>
-            </div>
-          </div>
-        </div>
-        <div class="row-2"><b>Liked By these users</b></div>
-        <div class="caption row-2">Roses are red violets are blue let's smash the patriachy me and you</div>
-        <div class="commentsslide row-2" id="comment2">
-          <ul class="list-group">
-            <li class="list-group-item">
-              <form>
-                <div class="row">
-                  <div class="col-10">
-                    <input
-                      class="form-control"
-                      type="text"
-                      placeholder="Comment your thoughts"
-                      aria-label="readonly input example"
-                    />
-                  </div>
-                  <div class="col-2">
-                    <i
-                      class="fa fa-send"
-                      style="font-size: 24px; padding-top: 7px"
-                    ></i>
-                  </div>
-                </div>
-              </form>
-            </li>
-            <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
-            </li>
-            <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
-            </li>
-            <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
-            </li>
-            <li class="list-group-item">
-              <b>Username</b><p>Jenil has commented</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div> -->
+  
 </div>
-{% endblock feed %}
-
-{% block user_name %}
-
-{{name}}
-{% endblock user_name %}
+{% endblock feed %} {% block user_name %} {{name}} {% endblock user_name %}

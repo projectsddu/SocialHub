@@ -1,5 +1,5 @@
 .nav1{
-    background-image: linear-gradient(to right, #fbad50, #b665e6);
+    background-image: linear-gradient(to right,#a992c3,#ffa231);
     height: 70px;
     box-shadow: 3px 3px 8px rgba(0,0,0,.2);
     
@@ -23,7 +23,7 @@ body{
 }
 .sub-button{
     color:white;
-    background-image:linear-gradient(to left,#667eea,#764ba2);
+    background-image:linear-gradient(to left,#764ba2,#34ebc3);
     border: chartreuse;
     /* font-color: */
     /* #a1c4fd → #c2e9fb */

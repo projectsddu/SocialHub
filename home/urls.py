@@ -7,6 +7,9 @@ urlpatterns = [
     path('/like/',views.add_like_to_post,name="like"),
     path('/unlike/',views.add_unlike_to_post,name="unlike"),
     path('/search/',views.search,name="search"),
-    path('/comments/',views.comment,name="search")    
+    path('/comments/',views.comment,name="search"),
+    path('/add_comment/',views.add_comment,name="add_comment"),
+    path('/profile/',views.profile,name="profile_page"),
+    path('/add_post/',views.add_post,name="add_post")  
 ]
 

@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -29,12 +29,12 @@
     </head>
 
     <nav
-      class="fixed navbar nav1 mb-3 fixed navbar-expand-lg navbar-light bg-light"
+      class="fixed navbar nav1  navbar-expand-lg navbar-light bg-light"
     >
       <div class="container-fluid navi">
         <a class="navbar-brand" href="#"
           ><p class="display-3" style="font-size: 30px; margin: 10px">
-            SocialHub
+            <b>SocialHub</b>
           </p>
           <p></p
         ></a>
@@ -50,18 +50,20 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav mr-auto mt-3 mb-lg-0">
             <li class="nav-item">
               <a
                 class="nav-link active display-3"
                 style="font-size: 20px"
                 aria-current="page"
                 href="#"
-                >Home</a
+                ><b>Home</b></a
               >
             </li>
-
-            <li class="nav-item dropdown">
+          <li class="nav-item display-3  mx-3" style="font-size:20px">
+          <a class="nav-link active" href="home/add_post/"><b>Post</b></a>
+          </li>
+            <li class="nav-item dropdown active">
               <a
                 class="nav-link dropdown-toggle display-3"
                 href="#"
@@ -71,11 +73,11 @@
                 aria-expanded="false"
                 style="font-size: 20px"
               >
-                <div id="usnm">{% block user_name %}{% endblock user_name %}</div>
+                <div id="usnm"><b>{% block user_name %}{% endblock user_name %}</b></div>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" style="" href="http://localhost:8000/home/profile">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Post a photo</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                   <a class="dropdown-item" href="#">Something else here</a>
@@ -100,7 +102,7 @@
         </div>
       </div>
     </nav>
-
+  
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <div class="row">

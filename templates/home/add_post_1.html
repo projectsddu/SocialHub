@@ -1,0 +1,13 @@
+{% extends 'home/base.html' %}
+<h1>JENIL GANDHI</h1>
+{% block user_name %} {{user.get_username}} {% endblock user_name %}
+{% block feed %}
+<form action="http://localhost:8000/home/add_post/" method = "post" enctype="multipart/form-data"> 
+        {% csrf_token %} 
+        <div style="margin-top:150px;margin-left:120px">
+        {{ form.as_p }} 
+        </div>
+        {% comment %} <button type="submit" style="margin-left:120px">Upload</button>  {% endcomment %}
+        <input type="submit" value="Submit"> 
+    </form> 
+{% endblock feed %}

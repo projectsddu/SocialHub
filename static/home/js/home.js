@@ -14,7 +14,11 @@ $(document).ready(function () {
                 url: "http://127.0.0.1:8000/home/comments/",
                 data: myKeyVals,
                 dataType: "text",
-                success: function (resultData) { console.log(JSON.parse(resultData)['comments'][0]); }
+                success: function (resultData) { 
+                    console.log(JSON.parse(resultData)['comments']);
+                    var commentdata=JSON.parse(resultData)['comments']
+                    
+                }
             });
             saveData.error(function () { alert("Something went wrong"); });
         }
@@ -80,6 +84,32 @@ $(document).ready(function () {
 
             //send a fetch api request saying user has disliked the post 
         }
+    })
+    $('.send_icon').click(function(event){
+        var send_icon_id=this.id
+        console.log(send_icon_id);
+        var id=send_icon_id.match(/\d+/g)[0]
+        console.log(id);
+        var input=document.getElementById('addcomment'+id)
+        console.log(input.value);
+        
+        event.preventDefault();
+        //here need to change and get the owner and commentor's name
+        var myKeyVals={'author':'jenil','commenter':'jenil','comment':input.value,'post_id':id}
+        var saveData = $.ajax({
+            type: 'POST',
+            url: "http://127.0.0.1:8000/home/add_comment/",
+            data: myKeyVals,
+            dataType: "text",
+            success: function (resultData) {
+                console.log("Added comment to post");
+                input.value=""
+                
+                //Task remaining make a element of li and then append it befor 1 elem of list
+            }
+        });
+        saveData.error(function () { alert("Oops wait for the server to start"); });
+        
     })
 }
 )
