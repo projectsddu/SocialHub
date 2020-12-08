@@ -1,12 +1,19 @@
+import cv2
+import os
+from .models import post,likes
+from login.models import customuser
+from .forms import ImageFrom
+from .models import UploadImage
+from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import post,likes
-from login.models import customuser
-import cv2
 from django.contrib.auth.models import User
-from .forms import ImageFrom
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.conf import settings
+
 
 def index(request):
     user_name=request.user
@@ -119,18 +126,26 @@ def profile(request):
 def add_post(request):
     if request.method=='POST':
         form=ImageFrom(request.POST,request.FILES)
-        # print(form.errors())
         if form.is_valid():
-            print(form.cleaned_data['Caption'])
-            print(form.cleaned_data['Image'])
+            # print(form.cleaned_data['Caption'])
+            # print(form.cleaned_data['Image'])
+            img=form.cleaned_data['Image']
+            caption=form.cleaned_data['Caption']
+            cur_user=request.user
+            print(cur_user)
+            # print(img.open())
+            timestamp=str(datetime.timestamp(datetime.now()))
+            path = default_storage.save('posts/'+timestamp+'.jpg', ContentFile(img.read()))
+            tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+            
         else:
             print("invalid")
         return HttpResponse("YAY")
-        img=request.method.POST['img']
+        
 
     else:
         form=ImageFrom()
     return render(request,'home/add_post_1.html',{'form':form})
-
-
+    
+    
 

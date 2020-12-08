@@ -5,7 +5,11 @@
 <form action="http://localhost:8000/home/add_post/" method = "post" enctype="multipart/form-data"> 
         {% csrf_token %} 
         <div style="margin-top:150px;margin-left:120px">
-        {{ form.as_p }} 
+        {% for field in form %}
+            <label for="{{field.id_for_label}}" class="label">
+            {{field.html_name}}</label>
+            {{field}}<br>
+        {% endfor %}
         </div>
         {% comment %} <button type="submit" style="margin-left:120px">Upload</button>  {% endcomment %}
         <input type="submit" value="Submit"> 
