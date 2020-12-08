@@ -6,7 +6,7 @@ from django.conf import settings
 class post(models.Model):
     post_id=models.AutoField(primary_key=True)
     user_fk=models.ForeignKey(User,on_delete=models.CASCADE)
-    photo=models.ImageField(upload_to='home/post_images',null=False)
+    photo_url=models.URLField(null=False)
     is_reported=models.BooleanField(default=False)
     location=models.CharField(max_length=30,default="Somewhere in the World")
     date_posted=models.DateField()

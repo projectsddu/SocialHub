@@ -2,16 +2,22 @@
 <h1>JENIL GANDHI</h1>
 {% block user_name %} {{user.get_username}} {% endblock user_name %}
 {% block feed %}
+<div class="container" style="margin-left:11    0px;margin-top:120px">
+    <h3>Post a photo</h3>
+</div>
 <form action="http://localhost:8000/home/add_post/" method = "post" enctype="multipart/form-data"> 
         {% csrf_token %} 
-        <div style="margin-top:150px;margin-left:120px">
+        <div style="margin-left:120px">
         {% for field in form %}
-            <label for="{{field.id_for_label}}" class="label">
-            {{field.html_name}}</label>
+            <label for="{{field.id_for_label}}" class="label display-3 mt-2" style="font-size:20px">
+            <b>{{field.html_name}}</b></label><br>
             {{field}}<br>
         {% endfor %}
         </div>
         {% comment %} <button type="submit" style="margin-left:120px">Upload</button>  {% endcomment %}
-        <input type="submit" value="Submit"> 
+        <div style="padding-left:120px" class="mt-3">
+        <button type="submit"  class="btn btn-info">Submit</button>
+        </div>
     </form> 
+    
 {% endblock feed %}
