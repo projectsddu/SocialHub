@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -18,7 +19,7 @@
       crossorigin="anonymous"
     />
 
-    <title>Profile</title>
+    <title>{{user.get_username}}</title>
   </head>
   <body>
     <div class="content-profile-page">
@@ -34,36 +35,39 @@
             alt="jofpin"
           />
         </div>
-        <button>Follow</button>
+        {% if followed %}
+          <button class="followed">UnFollow</button>
+          {% else %}
+          <button class="not_followed">Follow</button>
+        {% endif %}
         <div class="user-profile-data">
-          <h1>Jenil Gandhi</h1>
-          <p>Bio here</p>
+          <h1>{{user.get_username}}</h1>
+          
+          {% if bio %}
+          <p><i>{{bio}}</i></p>
+          {% else %}
+          <p>No Bio</p>
+          {% endif %}
         </div>
-        <div class="description-profile">Here the motto</div>
+        
         <ul class="data-user">
           <li>
             <a href="http://localhost:8000/home/profile/"
-              ><strong>3390</strong><span>Posts</span></a
+              ><strong>{{n_posts}}</strong><span>Posts</span></a
             >
           </li>
           <li>
-            <a><strong>718</strong><span>Followers</span></a>
+            <a><strong>{{followers}}</strong><span>Followers</span></a>
           </li>
           <li>
-            <a><strong>239</strong><span>Following</span></a>
+            <a><strong>{{following}}</strong><span>Following</span></a>
           </li>
         </ul>
       </div>
       <div class="row">
         <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
         <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
+        
         
       </div>
     </div>

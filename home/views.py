@@ -130,7 +130,11 @@ def add_comment(request):
 
 
 def profile(request):
-    return render(request, 'home/profile_base.html')
+    # name=request.
+    prof_user=customuser.objects.filter(user_inher=request.user)[0]
+    print(prof_user.bio)
+    users_dict={'bio':prof_user.bio,'followed':True}
+    return render(request, 'home/profile_base.html',users_dict)
 
 
 def add_post(request):

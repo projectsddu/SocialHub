@@ -3,7 +3,7 @@
 <div class="container" style="font-family:'Roboto'">
   {% comment %} {{posts}} {% endcomment %}
   {% for i in posts %}
-  <div class="card cont my-3" id="pid{{i.post_id}}" style="width: 500px">
+  <div class="card cont" id="pid{{i.post_id}}" style="margin-top: 20px;margin-bottom: 20px;background-color: #fafafa;width: 570px">
     <div class="row" style="height: 60px; padding: 10px">
       <div class="col-1">
         <img
@@ -55,28 +55,7 @@
         </div>
         <div class="commentsslide row-2" id="comment{{i.post_id}}">
           <ul class="list-group" id="commentlist{{i.post_id}}">
-            <li class="list-group-item">
-              <form>
-                <div class="row">
-                  <div class="col-10">
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="addcomment{{i.post_id}}"
-                      placeholder="Comment your thoughts"
-                      aria-label="readonly input example"
-                    />
-                  </div>
-                  <div class="col-2">
-                    <i
-                      class="fa fa-send send_icon"
-                      id="send{{i.post_id}}"
-                      style="font-size: 24px; padding-top: 7px"
-                    ></i>
-                  </div>
-                </div>
-              </form>
-            </li>
+            
             {% if i.comments %}
               {% for comment in i.comments %}
             
@@ -93,6 +72,26 @@
         </div>
       </div>
     </div>
+    <form class="mx-3 my-3">
+      <div class="row">
+        <div class="col-10">
+          <input
+            class="form-control tmp"
+            type="text"
+            id="addcomment{{i.post_id}}"
+            placeholder="Comment your thoughts..."
+            aria-label="readonly input example"
+          />
+        </div>
+        <div class="col-2">
+          <i
+            class="fa fa-send send_icon"
+            id="send{{i.post_id}}"
+            style="font-size: 24px; padding-top: 7px"
+          ></i>
+        </div>
+      </div>
+    </form>
   </div>
   {% endfor %}
   

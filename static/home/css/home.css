@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Proxima_nova');
 .nav1{
-    background-image: linear-gradient(to right,#a992c3,#ffa231);
-    height: 70px;
-    box-shadow: 3px 3px 8px rgba(0,0,0,.2);
+    background-image: linear-gradient(100deg,#833AB4,#c13584,#e1306c);
+    height: 60px;
+    color: #fffafa;
+    font-size: medium;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
     
 }
 
 body{
+    font-family: Neue Helvetica;
     background-color: #fffdfc;
 }
 .cont{
@@ -17,15 +21,29 @@ body{
 .comment:hover{
     color:#10e8e4
 }
+.tmp{
+    outline: none;
+}
 .form-control:focus{
     border: 0;
-    outline: #fbad50;
+    outline: none;
+    outline-color:white ;
+    border:1px solid #fbad50;
 }
 .sub-button{
     color:white;
-    background-image:linear-gradient(to left,#764ba2,#34ebc3);
+    background-image:linear-gradient(to left,#764ba2,#eb801d);
     border: chartreuse;
     /* font-color: */
     /* #a1c4fd → #c2e9fb */
    
+}
+.cust_but{
+    background-image: linear-gradient(135deg ,#405DE6,#5851DB,#833AB4,#c13584,#e1306c,#fd1d1d);
+    color: white;
+    border-radius: 3px;
+    
+}
+.cust_but:hover{
+    color:#e6d9d9
 }

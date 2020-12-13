@@ -62,8 +62,8 @@ a {
 }
 
 .profile-user-page button:hover {
-  background-image: linear-gradient(180deg,#f1b367,#c176ec);
-  transition: background .5s ease-in-out;
+  background-image: linear-gradient(13deg ,#405DE6,#e1306c);
+  transition: background 6s ease-in-out;
   border: 1px solid #fff;
   
 }
