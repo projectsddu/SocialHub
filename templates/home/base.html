@@ -14,6 +14,8 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="{% static 'home/css/home.css' %}" />
+    {% block css_links %}
+    {% endblock css_links %}
     <title>{% block title %} {% endblock title %}</title>
   </head>
   <body>
@@ -85,7 +87,7 @@
               </ul>
             </li>
             <li class="mt-1 mx-3" style="padding-left:750px;">
-              <a href="#" style="color: aliceblue;text-decoration: none;">
+              <a href="http://localhost:8000/search" style="color: aliceblue;text-decoration: none;">
               <div style="border: 2px solid white; border-radius: 20px;"><div style="padding-top: 5px;padding-left: 10px;padding-bottom: 5px;padding-right: 20px;"><b style="font-size: 18px;">Search</b>
                 <i class="fa fa-search mx-3"  aria-hidden="true"></i>
                 </div>
@@ -116,6 +118,7 @@
       src="https://kit.fontawesome.com/c939899435.js"
       crossorigin="anonymous"
     ></script>
+    
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
       integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"

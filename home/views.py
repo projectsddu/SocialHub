@@ -14,7 +14,11 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 from django.contrib.auth import logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def index(request):
     user_name = request.user
     print(user_name.username)
@@ -125,7 +129,14 @@ def add_comment(request):
     if request.method == 'GET':
         return HttpResponse("<h1>404 Page Not Found</h1>")
     else:
-        print(request.POST)
+        
+        post_fetched=post.objects.filter(post_id=request.POST['post_id'])[0]
+        owner=post_fetched.user_fk.username
+        commentor=request.POST['comentr']
+        filter_user=User.objects.filter(username=commentor)[0]
+        print(filter_user)
+        print(owner)
+        print(request.POST['comentr'])
         return HttpResponse("comment added")
 
 

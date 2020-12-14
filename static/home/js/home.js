@@ -1,3 +1,4 @@
+//Jquery Here
 $(document).ready(function () {
     $('.commentsslide').slideUp(1)
     $('.comment').click(
@@ -92,10 +93,12 @@ $(document).ready(function () {
         console.log(id);
         var input=document.getElementById('addcomment'+id)
         console.log(input.value);
-        
+        // cmtr=document.getElementById('pid'+id).children[0].children[1].children[0].children[0].innerText
+        var liker=document.getElementById("usnm").innerText
+        console.log("HASO AUR HASO"+liker);
         event.preventDefault();
-        //here need to change and get the owner and commentor's name
-        var myKeyVals={'author':'jenil','commenter':'jenil','comment':input.value,'post_id':id}
+        //here need to change and get the owner and  commentor's name
+        var myKeyVals={'comentr':liker,'comment':input.value,'post_id':id};
         var saveData = $.ajax({
             type: 'POST',
             url: "http://127.0.0.1:8000/home/add_comment/",

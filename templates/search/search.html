@@ -1,0 +1,17 @@
+
+{% extends 'home/base.html' %}
+{% load static %}
+{% block user_name %} {{user.get_username}} {% endblock user_name %}
+
+{% block feed %}
+<div class="container mt-3">
+<h1 class="gradient-text">Search</h1>
+<div class="form-floating mb-3 ">
+  <input type="email" class="form-control " id="floatingInput" placeholder="Search the world">
+  <label for="floatingInput"  class="gradient-text">Search by username or id</label>
+</div>
+</div>
+{% endblock feed %}
+{% block css_links %}
+<link rel="stylesheet" href="{% static 'search/css/search.css' %}" />
+{% endblock css_links %}

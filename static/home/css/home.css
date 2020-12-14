@@ -24,11 +24,20 @@ body{
 .tmp{
     outline: none;
 }
+.form-control{
+    border: 1px solid;
+    border-image-slice: 1;
+    border-width: 3px;
+    outline: none;
+    border-image-source: linear-gradient(to right, #ac88eb, #ee93cd);
+}
 .form-control:focus{
     border: 0;
     outline: none;
     outline-color:white ;
-    border:1px solid #fbad50;
+    border:3px solid ;
+    border-image-slice:3%;
+    border-image-source: linear-gradient(to right,#ee93cd,#ac88eb);
 }
 .sub-button{
     color:white;
