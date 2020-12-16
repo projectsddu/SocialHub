@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     path('', views.index,name="Search"),
+    path('/search_query',views.search_query,name="search_query")
 ]
