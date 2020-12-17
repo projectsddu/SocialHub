@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django import forms
 from django.conf import settings
+import datetime
 
 class post(models.Model):
     post_id=models.AutoField(primary_key=True)
@@ -20,8 +21,13 @@ class comments(models.Model):
     comment_text=models.TextField()
 
 class likes(models.Model):
+    like_id=models.AutoField(primary_key=True)
     post_id=models.ForeignKey(post,on_delete=models.CASCADE)
     liker_user=models.ForeignKey(User,on_delete=models.CASCADE)
+    date_liked=models.DateField(default=datetime.date.today)
+
+    def get_treding():
+        return likes.objects.raw("select like_id,Post_id from home_likes")
 
 class UploadImage(models.Model):
     """
