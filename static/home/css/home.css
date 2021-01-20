@@ -56,3 +56,6 @@ body{
 .cust_but:hover{
     color:#e6d9d9
 }
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
