@@ -1,4 +1,3 @@
-import cv2
 import os
 from .models import post, likes
 from login.models import customuser
