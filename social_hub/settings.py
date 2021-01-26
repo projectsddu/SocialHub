@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    
+    'channels',
+    'chat',
     'login.apps.LoginConfig',
     'home.apps.HomeConfig',
     'django.contrib.admin',
@@ -70,8 +71,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'social_hub.wsgi.application'
-
+# WSGI_APPLICATION = 'social_hub.wsgi.application'
+ASGI_APPLICATION='social_hub.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
