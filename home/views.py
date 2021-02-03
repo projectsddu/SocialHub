@@ -55,7 +55,6 @@ def index(request):
     }
     return render(request, 'home/home.html', user_details_dict)
 
-
 @csrf_exempt
 def add_like_to_post(request):
     if request.method == 'POST':
