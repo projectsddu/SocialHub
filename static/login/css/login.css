@@ -6,6 +6,10 @@ body{
 /* BASIC */
 
 html {
+  background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
   background-color: linear-gradient(to right,  #FFDC80,#FCAF45,#F56040,#E1306C, #C13584,#833AB4);
 }
 
@@ -278,4 +282,28 @@ input[type=text]:placeholder {
 
 * {
   box-sizing: border-box;
+}
+
+.signup {
+  color: #353436;
+}
+
+
+.signup:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #c13584;
+  content: "";
+  transition: width 0.2s;
+}
+
+.signup:hover {
+  color: #29282b;
+}
+
+.signup:hover:after{
+  width: 100%;
 }
