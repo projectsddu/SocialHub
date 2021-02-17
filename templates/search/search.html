@@ -9,7 +9,7 @@
 <div class="form-floating mb-3 ">
 <form method="post" action="http://localhost:8000/search/search_query">
   {% csrf_token %}
-  <input type="text" name="search_query" class="form-control " id="search_query" placeholder="Search the world">
+  <input type="text" name="search_query" class="form-control search_bar" id="search_query" placeholder="Search the world">
   <label for="floatingInput" name="search_query" class="gradient-text">Search by username or id</label>
 </form>
 </div>
@@ -18,3 +18,13 @@
 {% block css_links %}
 <link rel="stylesheet" href="{% static 'search/css/search.css' %}" />
 {% endblock css_links %}
+
+{% block js %}
+
+<script src="{% static 'search/js/search.js' %}">
+</script>
+
+{% endblock js %}
+
+
+
