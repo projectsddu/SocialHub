@@ -7,11 +7,15 @@
 <div class="container mt-3">
 <h1 class="gradient-text">Search</h1>
 <div class="form-floating mb-3 ">
-<form method="post" action="http://localhost:8000/search/search_query">
+{% comment %} <form method="post" action="http://localhost:8000/search/search_query"> {% endcomment %}
+<div>
   {% csrf_token %}
   <input type="text" name="search_query" class="form-control search_bar" id="search_query" placeholder="Search the world">
   <label for="floatingInput" name="search_query" class="gradient-text">Search by username or id</label>
-</form>
+{% comment %} </form> {% endcomment %}
+</div>
+<ul id="search_res" class="list-group">
+</ul>
 </div>
 </div>
 {% endblock feed %}
