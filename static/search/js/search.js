@@ -19,14 +19,20 @@ $(document).ready(function () {
                 len_data = JSON.parse(resultData)['post']
                 var populating_element = document.getElementById("search_res");
                 populating_element.innerHTML = "";
-                console.log(len_data)
+                console.log(typeof (len_data.length))
+                if (len_data.length == 0) {
+                    var elem = document.createElement("li")
+                    elem.setAttribute("class", "list-group-item");
+                    elem.innerHTML = "<h3>Sorry no results found</h3>"
+                    populating_element.appendChild(elem);
+                }
                 for (data in len_data) {
                     var search_username = len_data[data].username
                     var search_photo = "http://localhost:8000" + len_data[data].photo_url
                     // console.log(search_photo)
                     var elem = document.createElement("li")
                     elem.setAttribute("class", "list-group-item");
-                    elem.innerHTML = "<img class='rounded-circle' style='width:60px;height:60px;border:1px solid black;border-radius: 50%;object-fit: cover;' src='" + search_photo + "'> <span style='font-size:20px;padding-left:20px'>" + search_username + "</span>";
+                    elem.innerHTML = "<img class='rounded-circle user_img'  src='" + search_photo + "'> <span style='font-size:20px;padding-left:20px' class='custom_text'>" + search_username + "</span>";
                     populating_element.appendChild(elem);
 
 
@@ -35,9 +41,17 @@ $(document).ready(function () {
 
 
             }
+
         });
 
-
+        saveData.error(function () {
+            var populating_element = document.getElementById("search_res");
+            var elem = document.createElement("li")
+            populating_element.innerHTML = "";
+            elem.setAttribute("class", "list-group-item");
+            elem.innerHTML = "<h3>Sorry no results found</h3>"
+            populating_element.appendChild(elem);
+        })
     })
 }
 )
