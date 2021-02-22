@@ -1,22 +1,41 @@
 from django.shortcuts import render, HttpResponse
-from home.models import likes
+from home.models import likes,post
 from django.db.models.expressions import RawSQL
 from django.http import JsonResponse
 from login.models import customuser
 from django.views.decorators.csrf import csrf_exempt
 import json
+import datetime
+
+def check_datetime(obj):
+    if len(str(obj))==1:
+        return "0"+str(obj)
+    else:
+        return str(obj)
 
 def index(request):
-    return render(request, "search/search.html")
+    year=datetime.datetime.now().year
+    day=datetime.datetime.now().day
+    month=datetime.datetime.now().month
+    today=str(year)+"-"+str(check_datetime(month))+"-"+str(check_datetime(day))
+    x = likes.objects.raw(
+        "Select like_id,post_id_id, count(post_id_id) as cpid From home_likes where date_liked='"+today+"'  Group by post_id_id Order by count(post_id_id) DESC;")
+    print(len(x))
+    post_details={}
+    post_details['posts']=[]
+    for i in x:
+        post_tmp={}
+        posts=post.objects.filter(post_id=i.post_id.post_id)[0]
+        post_tmp['url']="http://localhost:8000/media/"+posts.photo_url
+        post_tmp['likes']=len(likes.objects.filter(post_id=posts.post_id))
+        post_tmp['comments']=300
+        post_details['posts'].append(post_tmp)
+    return render(request, "search/search.html",post_details)
 
 def search_query(request):
     print(request.POST.get('search_query'))
 
-    x = likes.objects.raw(
-        "Select like_id,post_id_id, count(post_id_id) as cpid From home_likes where date_liked='2020-12-17'  Group by post_id_id Order by count(post_id_id) DESC;")
-    print(len(x))
-    for i in x:
-        print(i.cpid, i.post_id)
+    
     return render(request, 'search/search_query_page.html')
 
 @csrf_exempt

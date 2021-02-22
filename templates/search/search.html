@@ -18,9 +18,31 @@
 </ul>
 </div>
 </div>
+<hr>
+<h2 class="gradient-text">See what's trending</h2>
+<div class="row">
+{% for famous in posts %}
+  
+  <div class="col">
+          <img
+            src="{{famous.url}}"
+            class="rounded-0 cover my-3 myimg"
+            style="width: 220px; height: 220px">
+         
+          <div class="mydiv">
+            <div class="row">
+              <div class="col-2"><i class="fas fa-heart fa-lg">{{famous.likes}}</i></div>
+              <div class="col-2"><i class="fas fa-comment fa-lg">{{famous.comments}}</i></div>
+            </div>
+          </div>
+        </div>
+{% endfor %}
+
+</div>
 {% endblock feed %}
 {% block css_links %}
 <link rel="stylesheet" href="{% static 'search/css/search.css' %}" />
+
 {% endblock css_links %}
 
 {% block js %}
