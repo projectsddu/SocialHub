@@ -15,7 +15,7 @@ from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+import operator
 
 @login_required
 def index(request):
@@ -144,6 +144,23 @@ def profile(request):
     prof_user=customuser.objects.filter(user_inher=request.user)[0]
     print(prof_user.bio)
     users_dict={'bio':prof_user.bio,'followed':True}
+    posts=post.objects.filter(user_fk=request.user).order_by("post_id").reverse()
+    # posts=sorted(posts,key=operator.attrgetter('date_posted'))
+    no_of_posts=len(posts)
+    users_dict['n_posts']=no_of_posts
+    users_dict['following']="dummy"
+    users_dict['followers']="dummy"
+    users_dict['user_image']="http://localhost:8000"+prof_user.Image.url
+    users_dict['posts']=[]
+    for post1 in posts:
+        user_post_obj={}
+        user_post_obj['photo_url']="http://localhost:8000/media/"+post1.photo_url
+        user_post_obj['post_id']=post1.post_id
+        user_post_obj['likes']=len(likes.objects.filter(post_id=post1.post_id))
+        # Add here one for comment
+        user_post_obj['comments']=30
+        users_dict['posts'].append(user_post_obj)
+    print(users_dict)
     return render(request, 'home/profile_base.html',users_dict)
 
 

@@ -7,7 +7,7 @@
 }
 
 .search_bar {
-  border: 3px solid red;
+  border: 3px solid rgb(211, 20, 201);
 }
 
 .user_img {
@@ -21,4 +21,33 @@
 .custom_text {
   font-size: 20px;
   padding-left: 20px
+}
+.mydiv { 
+  position: absolute; 
+  top: 105px; 
+  left: 70px; 
+  width: 100%; 
+  opacity: 0;
+}
+.col{
+  position: relative; 
+   width: 100%;
+}
+
+.col:hover .myimg{
+  opacity: 0.3;
+}
+.col:hover .mydiv
+{
+  opacity: 1;
+}
+.fa-heart{
+  color:#e01a5c;
+  
+}
+.fa-comment{
+  color:#109ada
+}
+.myimg{
+  object-fit: cover;
 }

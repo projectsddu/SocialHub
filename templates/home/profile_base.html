@@ -1,16 +1,15 @@
-
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
+    {% load static %}
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <link rel="stylesheet" href="{% static 'home/css/profile.css' %}" />
+    <link rel="stylesheet" href="{% static 'home/css/home.css' %}" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -18,10 +17,108 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
-
-    <title>{{user.get_username}}</title>
+    <script
+      src="https://kit.fontawesome.com/c939899435.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Profile:{{user.get_username}}</title>
   </head>
   <body>
+    <nav
+      class="fixed navbar nav1 sticky-top navbar-expand-lg navbar-light bg-light"
+    >
+      <div class="container-fluid navi">
+        <a class="navbar-brand" href="http://localhost:8000/home"
+          ><p class="display-3" style="font-size: 30px; margin: 10px">
+            <b style="color: aliceblue">SocialHub</b>
+          </p>
+          <p></p
+        ></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto mt-3 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active display-3"
+                style="font-size: 20px"
+                aria-current="page"
+                href="http://localhost:8000/home"
+                ><b style="color: aliceblue">Home</b></a
+              >
+            </li>
+            <li class="nav-item display-3 mx-3" style="font-size: 20px">
+              <a class="nav-link active" href="home/add_post/"
+                ><b style="color: aliceblue">Post</b></a
+              >
+            </li>
+            <li class="nav-item dropdown active">
+              <a
+                class="nav-link dropdown-toggle display-3"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-expanded="false"
+                style="font-size: 20px; color: aliceblue ;"
+              >
+                <div id="usnm">
+                  <b style="color: aliceblue">{{user.get_username}}</b>
+                </div>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    style=""
+                    href="http://localhost:8000/home/profile"
+                    >Profile</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="#">Post a photo</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="http://localhost:8000/home/logout"
+                    >Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="mt-1 mx-3" style="padding-left: 650px">
+              <a
+                href="http://localhost:8000/search"
+                style="color: aliceblue; text-decoration: none"
+              >
+                <div style="border: 2px solid white; border-radius: 20px">
+                  <div
+                    style="
+                      padding-top: 5px;
+                      padding-left: 10px;
+                      padding-bottom: 5px;
+                      padding-right: 20px;
+                    "
+                  >
+                    <b style="font-size: 18px">Search</b>
+                    <i class="fa fa-search mx-3" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="content-profile-page">
       <div class="profile-user-page card">
         <div class="img-user-profile">
@@ -29,32 +126,22 @@
             class="profile-bgHome cover"
             src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg"
           />
-          <img
-            class="avatar cover"
-            src="http://localhost:8000/media/home/post_images/a.jpg"
-            alt="jofpin"
-          />
+          <img class="avatar cover" src="{{user_image}}" alt="jofpin" />
         </div>
-        {% if followed %}
-          <button class="followed">UnFollow</button>
-          {% else %}
-          <button class="not_followed">Follow</button>
-        {% endif %}
+
         <div class="user-profile-data">
           <h1>{{user.get_username}}</h1>
-          
+
           {% if bio %}
           <p><i>{{bio}}</i></p>
           {% else %}
           <p>No Bio</p>
           {% endif %}
         </div>
-        
+
         <ul class="data-user">
           <li>
-            <a href="http://localhost:8000/home/profile/"
-              ><strong>{{n_posts}}</strong><span>Posts</span></a
-            >
+            <a><strong>{{n_posts}}</strong><span>Posts</span></a>
           </li>
           <li>
             <a><strong>{{followers}}</strong><span>Followers</span></a>
@@ -65,10 +152,28 @@
         </ul>
       </div>
       <div class="row">
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        <div class="col-4"><img src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg" class="rounded-0 cover my-3" style="width:220px;height:220px"></div>
-        
-        
+        {% if posts %} {% for post in posts %}
+
+        <div class="col-4">
+          <img
+            src="{{post.photo_url}}"
+            class="rounded-0 cover my-3 myimg"
+            style="width: 220px; height: 220px"
+          />
+          <div class="mydiv">
+            <div class="row">
+              <div class="col-2" style="margin-right: 20px">
+                <i class="fas fa-heart fa-lg">{{post.likes}}</i>
+              </div>
+              <div class="col-1"><i class="fas fa-comment fa-lg">13</i></div>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <h3 style="margin-top: 30px; margin-left: 300px">
+          <b>No posts yet</b>
+        </h3>
+        {% endif %}
       </div>
     </div>
 

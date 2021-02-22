@@ -144,3 +144,36 @@ a {
   color: #c090dd; 
 }
 
+.container {
+  position: relative;
+  width: 50%;
+}
+
+
+
+.mydiv { 
+  position: absolute; 
+  top: 105px; 
+  left: 70px; 
+  width: 100%; 
+  opacity: 0;
+}
+.col-4{
+  position: relative; 
+   width: 100%;
+}
+
+.col-4:hover .myimg{
+  opacity: 0.3;
+}
+.col-4:hover .mydiv
+{
+  opacity: 1;
+}
+.fa-heart{
+  color:#e01a5c;
+  
+}
+.fa-comment{
+  color:#109ada
+}
