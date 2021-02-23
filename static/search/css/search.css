@@ -51,3 +51,7 @@
 .myimg{
   object-fit: cover;
 }
+input{
+  caret-color: #e011e7;
+  caret-thickness :12px;
+}
