@@ -32,7 +32,7 @@ $(document).ready(function () {
                     // console.log(search_photo)
                     var elem = document.createElement("li")
                     elem.setAttribute("class", "list-group-item");
-                    elem.innerHTML = "<img class='rounded-circle user_img'  src='" + search_photo + "'> <span style='font-size:20px;padding-left:20px' class='custom_text'>" + search_username + "</span>";
+                    elem.innerHTML = "<img class='rounded-circle user_img'  src='" + search_photo + "'>  <span style='font-size:20px;padding-left:20px' class='custom_text'><a href='http://localhost:8000/home/users/jenil'>" + search_username + "</a></span>";
                     populating_element.appendChild(elem);
 
 

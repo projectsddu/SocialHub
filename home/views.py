@@ -72,6 +72,13 @@ def add_like_to_post(request):
         return HttpResponse("<h1>404 Page not found</h1>")
 
 
+
+def show_users(request,slug):
+    print(slug)
+    # Implement the logic
+    return HttpResponse("lol")
+
+
 @csrf_exempt
 def add_unlike_to_post(request):
 
@@ -138,7 +145,7 @@ def add_comment(request):
         print(request.POST['comentr'])
         return HttpResponse("comment added")
 
-
+# Renders current user's profile 
 def profile(request):
     # name=request.
     prof_user=customuser.objects.filter(user_inher=request.user)[0]
