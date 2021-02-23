@@ -75,7 +75,7 @@ def add_like_to_post(request):
 
 def show_users(request,slug):
     print(slug)
-    # Implement the logic
+    # Implement the logic1
     return HttpResponse("lol")
 
 
