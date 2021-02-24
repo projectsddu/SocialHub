@@ -28,14 +28,14 @@ $(document).ready(function () {
                 }
                 for (data in len_data) {
                     var search_username = len_data[data].username
+                    // console.log(search_username + "keval")
                     var search_photo = "http://localhost:8000" + len_data[data].photo_url
                     // console.log(search_photo)
                     var elem = document.createElement("li")
                     elem.setAttribute("class", "list-group-item");
-                    elem.innerHTML = "<img class='rounded-circle user_img'  src='" + search_photo + "'>  <span style='font-size:20px;padding-left:20px' class='custom_text'><a href='http://localhost:8000/home/users/jenil'>" + search_username + "</a></span>";
+                    elem.innerHTML = "<img class='rounded-circle user_img'  src='" + search_photo + "'>  <span style='font-size:20px;padding-left:20px' class='custom_text'><a href='http://localhost:8000/home/users/"+search_username+"' >" + search_username + "</a></span>";
                     populating_element.appendChild(elem);
-
-
+                    
                 }
 
 

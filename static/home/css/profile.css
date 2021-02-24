@@ -52,7 +52,7 @@ a {
   font-size: 13px;
   font-weight: bold;
   cursor: pointer;
-  width: 7em; 
+  /* width: 15em;  */
   background-image: linear-gradient(to right,#f1b367,#c176ec);
   border: 1px solid #fff;
   color: #fff;
@@ -62,7 +62,7 @@ a {
 }
 
 .profile-user-page button:hover {
-  background-image: linear-gradient(13deg ,#405DE6,#e1306c);
+  background-image: linear-gradient(13deg ,#f1b367,#c176ec);
   transition: background 6s ease-in-out;
   border: 1px solid #fff;
   
@@ -176,4 +176,13 @@ a {
 }
 .fa-comment{
   color:#109ada
+}
+
+.send {
+  background-color: #109ada;
+}
+
+
+.sent {
+  background-color: #e01a5c;
 }

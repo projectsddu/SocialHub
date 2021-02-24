@@ -72,13 +72,6 @@ def add_like_to_post(request):
         return HttpResponse("<h1>404 Page not found</h1>")
 
 
-
-def show_users(request,slug):
-    print(slug)
-    # Implement the logic1
-    return HttpResponse("lol")
-
-
 @csrf_exempt
 def add_unlike_to_post(request):
 
@@ -170,6 +163,35 @@ def profile(request):
     print(users_dict)
     return render(request, 'home/profile_base.html',users_dict)
 
+
+def show_users(request,slug):
+    print(slug)
+    # print(request.user)
+    var = User.objects.filter(username=slug)
+    print(var[0])
+    prof_user = customuser.objects.filter(user_inher = var[0])[0]
+    # print(prof_user.bio)
+    user_dict = {'bio':prof_user.bio,'followd': True}
+    posts = post.objects.filter(user_fk=var[0]).order_by("post_id").reverse()
+    no_of_posts=len(posts)
+    user_dict['n_posts']=no_of_posts
+    user_dict['following']="dummy"
+    user_dict['followers']="dummy"
+    user_dict['user_image']="http://localhost:8000"+prof_user.Image.url
+    user_dict['posts']=[]
+    user_dict['cur_user'] = var[0].username
+    for p in posts:
+        user_post_obj={}
+        user_post_obj['photo_url']="http://localhost:8000/media/"+p.photo_url
+        user_post_obj['post_id']=p.post_id
+        user_post_obj['likes']=len(likes.objects.filter(post_id=p.post_id))
+        # Add here one for comment
+        user_post_obj['comments']=30
+        user_dict['posts'].append(user_post_obj)
+    # print(user_dict)
+    return render(request, 'home/show_users.html',user_dict)
+    
+    # return HttpResponse("lol")
 
 def add_post(request):
     if request.method == 'POST':
