@@ -1,0 +1,43 @@
+{% extends 'business_dashboard/dashboard_base.html' %} {% block items %}
+
+<div class="col" style="color: white">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+  <div class="row mx-3 mt-3">
+    <div class="chart_container col-4 mx-3">
+      <h2>Sales</h2>
+      <div class="chart_sub_container">
+        <canvas id="sales" width="900" height="800"></canvas>
+      </div>
+    </div>
+    <div class="chart_container col-4 mx-3">
+      <h2>Orders Recieved</h2>
+      <div class="chart_sub_container">
+        <canvas id="orders" width="900" height="800"></canvas>
+      </div>
+    </div>
+    <div class="chart_container_fill col-12 mx-3">
+            <h2>Ads Shown</h2>
+            <div class="row">
+              <div class="col-8 chart_sub_container_fill">
+                <canvas
+                  id="ads_shown"
+                  width="500px"
+                  height="400px"
+                ></canvas>
+              </div>
+              <div class="col-4">
+                <div class="side_container">
+                <h2>Notes</h2>
+                <ul>
+                <li>A machine learning model would be deployed in the backend and from there it would display a appropriate message </li>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+  </div>
+</div>
+{% load static %}
+<script src="{% static 'business/js/manage.js' %}"></script>
+{% endblock items %}
