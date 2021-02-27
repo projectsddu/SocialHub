@@ -2,7 +2,7 @@ import os
 from .models import post, likes
 from login.models import customuser
 from .forms import ImageFrom
-from .models import UploadImage, post
+from .models import UploadImage, post, FriendRequest
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -16,6 +16,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import operator
+
 
 @login_required
 def index(request):
@@ -221,6 +222,18 @@ def add_post(request):
     else:
         form = ImageFrom()
     return render(request, 'home/add_post_1.html', {'form': form})
+
+@csrf_exempt
+def add_friend(request):
+    # print(request.POST)
+    destination_user = request.POST['destination_user']
+    # print(destination_user)
+    destination_user_auth = User.objects.filter(username = destination_user)
+    # print(destination_user_auth)
+    request_obj = FriendRequest(sender_username = request.POST['sender_username'],receiver_username = destination_user)
+    request_obj.save()
+    
+    return HttpResponse("add friend")
 
 def logout_view(request):
     logout(request)

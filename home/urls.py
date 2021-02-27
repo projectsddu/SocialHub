@@ -12,6 +12,7 @@ urlpatterns = [
     path('/profile/',views.profile,name="profile_page"),
     path('/add_post/',views.add_post,name="add_post"),
     path('/logout/',views.logout_view,name="logout"),
-    path('/users/<slug:slug>',views.show_users,name="users")  
+    path('/users/<slug:slug>',views.show_users,name="users"),
+    path('/add_friend/',views.add_friend,name="addfriend")  
 ]
 
