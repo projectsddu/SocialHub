@@ -18,6 +18,17 @@ from django.contrib.auth.decorators import login_required
 import operator
 
 
+
+
+def getLikesByPost(post_obj,cur_user):
+    like=likes.objects.filter(post_id=post_obj.post_id)
+    like_count=len(like)
+    you=likes.objects.filter(post_id=post_obj.post_id,liker_user=cur_user)
+    if len(you)==1:
+        return "You and "+str(like_count-1)+" other"
+    return str(like_count)+" people"
+
+
 @login_required
 def index(request):
     user_name = request.user
@@ -30,7 +41,7 @@ def index(request):
         location = i.location
         caption = i.caption
         date_posted = i.date_posted
-        likedby = 'You Jenil'+' and '+'3 others'
+        likedby = getLikesByPost(i,request.user)
         image_url = i.photo_url
         current_user = i.user_fk
         current_user_profile = customuser.objects.filter(
