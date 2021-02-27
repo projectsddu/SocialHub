@@ -17,6 +17,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import operator
 
+
+
+def getLikesByPost(post_obj):
+    
+    return "jenil"
+
 @login_required
 def index(request):
     user_name = request.user
@@ -29,7 +35,7 @@ def index(request):
         location = i.location
         caption = i.caption
         date_posted = i.date_posted
-        likedby = 'You Jenil'+' and '+'3 others'
+        likedby = getLikesByPost(i)
         image_url = i.photo_url
         current_user = i.user_fk
         current_user_profile = customuser.objects.filter(

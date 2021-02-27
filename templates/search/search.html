@@ -21,6 +21,7 @@
 <hr>
 <h2 class="gradient-text">See what's trending</h2>
 <div class="row">
+{% if famous %}
 {% for famous in posts %}
   
   <div class="col">
@@ -37,7 +38,20 @@
           </div>
         </div>
 {% endfor %}
-
+{% else %}
+<div class="card text-center">
+  <div class="card-header" style="background-color:#353839;color:white">Trending stories would appear here</div>
+  <div class="card-body" style="background-color:#4a4a4a;color:white">
+    <h5 class="card-title"></h5>
+    <p class="card-text">
+      Wanna be on the trending page gather likes and comments and we would find out you!
+      While we set up what's trending checkout your friends
+    </p>
+    <a href="http://localhost:8000/search" class="btn" style="background-color:pink;color:black">Search your friends</a>
+  </div>
+  <div class="card-footer text-muted" style="background-color:#353839;"><p style="color:white;height:7px">Today</p></div>
+</div>
+{% endif %}
 </div>
 {% endblock feed %}
 {% block css_links %}
