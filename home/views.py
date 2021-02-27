@@ -232,7 +232,7 @@ def add_friend(request):
     # print(destination_user_auth)
     request_obj = FriendRequest(sender_username = request.POST['sender_username'],receiver_username = destination_user)
     request_obj.save()
-    
+    # return response
     return HttpResponse("add friend")
 
 def logout_view(request):
