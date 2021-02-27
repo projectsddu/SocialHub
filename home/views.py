@@ -2,7 +2,7 @@ import os
 from .models import post, likes
 from login.models import customuser
 from .forms import ImageFrom
-from .models import UploadImage, post
+from .models import UploadImage, post, FriendRequest
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -19,6 +19,7 @@ import operator
 
 
 
+
 def getLikesByPost(post_obj,cur_user):
     like=likes.objects.filter(post_id=post_obj.post_id)
     like_count=len(like)
@@ -26,6 +27,7 @@ def getLikesByPost(post_obj,cur_user):
     if len(you)==1:
         return "You and "+str(like_count-1)+" other"
     return str(like_count)+" people"
+
 
 @login_required
 def index(request):
@@ -231,6 +233,18 @@ def add_post(request):
     else:
         form = ImageFrom()
     return render(request, 'home/add_post_1.html', {'form': form})
+
+@csrf_exempt
+def add_friend(request):
+    # print(request.POST)
+    destination_user = request.POST['destination_user']
+    # print(destination_user)
+    destination_user_auth = User.objects.filter(username = destination_user)
+    # print(destination_user_auth)
+    request_obj = FriendRequest(sender_username = request.POST['sender_username'],receiver_username = destination_user)
+    request_obj.save()
+    # return response
+    return HttpResponse("add friend")
 
 def logout_view(request):
     logout(request)
