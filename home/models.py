@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.conf import settings
 import datetime
+
 from login.models import customuser
 
 
@@ -53,5 +54,9 @@ class FriendRequest(models.Model):
     receiver_username = models.CharField(max_length = 100)
     date_received = models.DateField(auto_now=True)
     request_status = models.BooleanField(default=False)
+    date = models.DateField(default=datetime.date.today)
+    def get_followed(self):
+        return self.request_status
+    
     
     

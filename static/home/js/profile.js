@@ -29,15 +29,49 @@ $(document).ready(function() {
             var saveData = $.ajax({
                 type: 'POST',
                 url: "http://127.0.0.1:8000/home/add_friend/",
-                data: {'destination_user' : document.getElementById("cur_user").innerText, 'sender_username' : document.getElementById("loginuser").innerText},
+                data: {'destination_user' : document.getElementById("cur_user").innerText, 'sender_username' : document.getElementById("loginuser").innerText,'option':'friend'},
                 dataType: "text",
     
                 success: function () {
                         console.log("Success")
                     }
             });
+            saveData.error=function(){
+                alert("kxcksncks");
+            }
+        }
+        else if(element.innerText=="Followed")
+        {
+            var saveData = $.ajax({
+                type: 'POST',
+                url: "http://127.0.0.1:8000/home/add_friend/",
+                data: {'destination_user' : document.getElementById("cur_user").innerText, 'sender_username' : document.getElementById("loginuser").innerText,'option':'unfriend'},
+                dataType: "text",
+    
+                success: function () {
+                        console.log("Success")
+                    }
+            });
+            saveData.error=function(){
+                alert("kxcksncks");
+            }
+            element.innerText="Send Friend Request"
         }
         else {
+            var saveData = $.ajax({
+                type: 'POST',
+                url: "http://127.0.0.1:8000/home/add_friend/",
+                data: {'destination_user' : document.getElementById("cur_user").innerText, 'sender_username' : document.getElementById("loginuser").innerText,'option':'unfriend'},
+                dataType: "text",
+    
+                success: function () {
+                        console.log("Success")
+                    }
+            });
+            saveData.error=function(){
+                alert("kxcksncks");
+            }
+            
             element.innerText = "Send Friend Request"
             element.setAttribute("class","send")   
         }

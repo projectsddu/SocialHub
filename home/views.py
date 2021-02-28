@@ -19,7 +19,15 @@ import operator
 
 
 
-
+def getRequests(cur_user_name):
+    unm=cur_user_name.get_username()
+    reqs=FriendRequest.objects.filter(receiver_username=unm).order_by('date')
+    req_list=[]
+    for req in reqs:
+        req_dict={}
+        req_dict['sender_name']=req.sender_username
+        req_list.append(req_dict)
+    return req_list
 def getLikesByPost(post_obj,cur_user):
     like=likes.objects.filter(post_id=post_obj.post_id)
     like_count=len(like)
@@ -36,6 +44,10 @@ def index(request):
     posts_to_show = []
     posts_query = post.objects.all().order_by('post_id').reverse()
     print(posts_query)
+    print("++++++++++++++++++++++++++++++++++++++++")
+    print(getRequests(request.user))
+    reqs=getRequests(request.user)
+    print("++++++++++++++++++++++++++++++++++++++++")
     for i in posts_query:
         owner = i.user_fk.username
         location = i.location
@@ -64,6 +76,9 @@ def index(request):
     user_details_dict = {
         'name': str(user_name.username),
         'posts': posts_to_show,
+        'notif':['sknks',"skdksm"],
+        'pendings':reqs,
+        
     }
     return render(request, 'home/home.html', user_details_dict)
 
@@ -178,8 +193,9 @@ def profile(request):
 
 def show_users(request,slug):
     print(slug)
-    # print(request.user)
+    req_username=request.user.username
     var = User.objects.filter(username=slug)
+    print(type(req_username))
     print(var[0])
     prof_user = customuser.objects.filter(user_inher = var[0])[0]
     # print(prof_user.bio)
@@ -192,6 +208,18 @@ def show_users(request,slug):
     user_dict['user_image']="http://localhost:8000"+prof_user.Image.url
     user_dict['posts']=[]
     user_dict['cur_user'] = var[0].username
+    user_dict['is_followed']=False
+    check_rln=FriendRequest.objects.raw("SELECT * FROM home_FriendRequest WHERE sender_username='"+str(req_username)+"' AND receiver_username='"+var[0].username+"'")
+    
+    print(len(check_rln))
+    if len(check_rln)>=1:
+        user_dict['is_followed']=True
+        for i in check_rln:
+            print(i.get_followed())
+            if i.get_followed()==True:
+                user_dict['accepted']=True
+            else:
+                user_dict['accepted']=False
     for p in posts:
         user_post_obj={}
         user_post_obj['photo_url']="http://localhost:8000/media/"+p.photo_url
@@ -237,12 +265,22 @@ def add_post(request):
 @csrf_exempt
 def add_friend(request):
     # print(request.POST)
+    option=request.POST['option']
+    print(option)
+    
+        
     destination_user = request.POST['destination_user']
     # print(destination_user)
     destination_user_auth = User.objects.filter(username = destination_user)
     # print(destination_user_auth)
-    request_obj = FriendRequest(sender_username = request.POST['sender_username'],receiver_username = destination_user)
-    request_obj.save()
+    if(option=="unfriend"):
+        request_obj=FriendRequest.objects.filter(sender_username = request.POST['sender_username'],receiver_username = destination_user)
+        request_obj.delete()
+    
+    
+    else:
+        request_obj = FriendRequest(sender_username = request.POST['sender_username'],receiver_username = destination_user)
+        request_obj.save()
     # return response
     return HttpResponse("add friend")
 

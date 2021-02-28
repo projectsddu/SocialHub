@@ -146,9 +146,26 @@
           <p>No Bio</p>
           {% endif %}
         </div>
+        
+        {% if is_followed %}
 
+        {% if accepted %}
+        <button style="margin-top: 290px;" id="fr_button">Followed</button>
+
+          {% else %}
+        <button style="margin-top: 290px;" id="fr_button">Friend Request Sent</button>
+        {% endif %}
+        
+        
+        
+        
+        
+        
+        
+        {% else %}
         <button style="margin-top: 290px;" id="fr_button">Send Friend Request</button>
 
+        {% endif %}
         <ul class="data-user">
           <li>
             <a><strong>{{n_posts}}</strong><span>Posts</span></a>
