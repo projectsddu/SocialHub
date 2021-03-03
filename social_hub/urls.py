@@ -10,6 +10,7 @@ urlpatterns = [
     path('home',include('home.urls')),
     path('search',include('search.urls')),
     path('chat',include('chat.urls')),
-    path('business',include('business_dashboard.urls'))
+    path('business',include('business_dashboard.urls')),
+    path('view_post',include('ViewPost.urls'))
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

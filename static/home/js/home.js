@@ -57,22 +57,11 @@ $(document).ready(function () {
             var id = this.id
             id = String(id)
             var final_id = id.match(/\d+/g);
-            console.log(final_id[0]);
+            
             var myKeyVals = { 'post_id': this.id }
 
             $('#' + 'comment' + final_id[0]).slideToggle(400)
-            var saveData = $.ajax({
-                type: 'POST',
-                url: "http://127.0.0.1:8000/home/comments/",
-                data: myKeyVals,
-                dataType: "text",
-                success: function (resultData) { 
-                    console.log(JSON.parse(resultData)['comments']);
-                    var commentdata=JSON.parse(resultData)['comments']
-                    
-                }
-            });
-            saveData.error(function () { alert("Something went wrong"); });
+            
         }
     )
 
