@@ -147,10 +147,10 @@
             <a><strong>{{n_posts}}</strong><span>Posts</span></a>
           </li>
           <li>
-            <a><strong>{{followers}}</strong><span>Followers</span></a>
+            <a href="{% url 'showfollowers' slug=user.get_username %}"><strong>{{followers}}</strong><span>Followers</span></a>
           </li>
           <li>
-            <a><strong>{{following}}</strong><span>Following</span></a>
+            <a href="{% url 'showfollowing' slug=user.get_username %}"><strong>{{following}}</strong><span>Following</span></a>
           </li>
         </ul>
       </div>

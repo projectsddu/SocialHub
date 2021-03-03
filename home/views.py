@@ -18,21 +18,35 @@ from django.contrib.auth.decorators import login_required
 import operator
 
 
+def getfollowers(username):
+    query = FriendRequest.objects.filter(
+        receiver_username=username, request_status=True)
+    return len(query)
+
+
+def getfollowing(username):
+    query = FriendRequest.objects.filter(
+        sender_username=username, request_status=True)
+    return len(query)
+
 
 def getRequests(cur_user_name):
-    unm=cur_user_name.get_username()
-    reqs=FriendRequest.objects.filter(receiver_username=unm,request_status=False).order_by('date').reverse()
-    req_list=[]
+    unm = cur_user_name.get_username()
+    reqs = FriendRequest.objects.filter(
+        receiver_username=unm, request_status=False).order_by('date').reverse()
+    req_list = []
     for req in reqs:
-        req_dict={}
-        req_dict['sender_name']=req.sender_username
+        req_dict = {}
+        req_dict['sender_name'] = req.sender_username
         req_list.append(req_dict)
     return req_list
-def getLikesByPost(post_obj,cur_user):
-    like=likes.objects.filter(post_id=post_obj.post_id)
-    like_count=len(like)
-    you=likes.objects.filter(post_id=post_obj.post_id,liker_user=cur_user)
-    if len(you)==1:
+
+
+def getLikesByPost(post_obj, cur_user):
+    like = likes.objects.filter(post_id=post_obj.post_id)
+    like_count = len(like)
+    you = likes.objects.filter(post_id=post_obj.post_id, liker_user=cur_user)
+    if len(you) == 1:
         return "You and "+str(like_count-1)+" other"
     return str(like_count)+" people"
 
@@ -46,14 +60,14 @@ def index(request):
     print(posts_query)
     print("++++++++++++++++++++++++++++++++++++++++")
     print(getRequests(request.user))
-    reqs=getRequests(request.user)
+    reqs = getRequests(request.user)
     print("++++++++++++++++++++++++++++++++++++++++")
     for i in posts_query:
         owner = i.user_fk.username
         location = i.location
         caption = i.caption
         date_posted = i.date_posted
-        likedby = getLikesByPost(i,request.user)
+        likedby = getLikesByPost(i, request.user)
         image_url = i.photo_url
         current_user = i.user_fk
         current_user_profile = customuser.objects.filter(
@@ -76,9 +90,9 @@ def index(request):
     user_details_dict = {
         'name': str(user_name.username),
         'posts': posts_to_show,
-        'notif':['sknks',"skdksm"],
-        'pendings':reqs,
-        
+        'notif': ['sknks', "skdksm"],
+        'pendings': reqs,
+
     }
     return render(request, 'home/home.html', user_details_dict)
 
@@ -155,83 +169,90 @@ def add_comment(request):
     if request.method == 'GET':
         return HttpResponse("<h1>404 Page Not Found</h1>")
     else:
-        
-        post_fetched=post.objects.filter(post_id=request.POST['post_id'])[0]
-        owner=post_fetched.user_fk.username
-        commentor=request.POST['comentr']
-        filter_user=User.objects.filter(username=commentor)[0]
+
+        post_fetched = post.objects.filter(post_id=request.POST['post_id'])[0]
+        owner = post_fetched.user_fk.username
+        commentor = request.POST['comentr']
+        filter_user = User.objects.filter(username=commentor)[0]
         print(filter_user)
         print(owner)
         print(request.POST['comentr'])
         return HttpResponse("comment added")
 
-# Renders current user's profile 
+# Renders current user's profile
+
+
 def profile(request):
     # name=request.
-    prof_user=customuser.objects.filter(user_inher=request.user)[0]
+    prof_user = customuser.objects.filter(user_inher=request.user)[0]
     print(prof_user.bio)
-    users_dict={'bio':prof_user.bio,'followed':True}
-    posts=post.objects.filter(user_fk=request.user).order_by("post_id").reverse()
+    users_dict = {'bio': prof_user.bio, 'followed': True}
+    posts = post.objects.filter(
+        user_fk=request.user).order_by("post_id").reverse()
     # posts=sorted(posts,key=operator.attrgetter('date_posted'))
-    no_of_posts=len(posts)
-    users_dict['n_posts']=no_of_posts
-    users_dict['following']="dummy"
-    users_dict['followers']="dummy"
-    users_dict['user_image']="http://localhost:8000"+prof_user.Image.url
-    users_dict['posts']=[]
+    no_of_posts = len(posts)
+    users_dict['n_posts'] = no_of_posts
+    users_dict['following'] = getfollowing(prof_user.user_inher.username)
+    users_dict['followers'] = getfollowers(prof_user.user_inher.username)
+    users_dict['user_image'] = "http://localhost:8000"+prof_user.Image.url
+    users_dict['posts'] = []
     for post1 in posts:
-        user_post_obj={}
-        user_post_obj['photo_url']="http://localhost:8000/media/"+post1.photo_url
-        user_post_obj['post_id']=post1.post_id
-        user_post_obj['likes']=len(likes.objects.filter(post_id=post1.post_id))
+        user_post_obj = {}
+        user_post_obj['photo_url'] = "http://localhost:8000/media/" + \
+            post1.photo_url
+        user_post_obj['post_id'] = post1.post_id
+        user_post_obj['likes'] = len(
+            likes.objects.filter(post_id=post1.post_id))
         # Add here one for comment
-        user_post_obj['comments']=30
+        user_post_obj['comments'] = 30
         users_dict['posts'].append(user_post_obj)
     print(users_dict)
-    return render(request, 'home/profile_base.html',users_dict)
+    return render(request, 'home/profile_base.html', users_dict)
 
 
-def show_users(request,slug):
+def show_users(request, slug):
     print(slug)
-    req_username=request.user.username
+    req_username = request.user.username
     var = User.objects.filter(username=slug)
     print(type(req_username))
     print(var[0])
-    prof_user = customuser.objects.filter(user_inher = var[0])[0]
+    prof_user = customuser.objects.filter(user_inher=var[0])[0]
     # print(prof_user.bio)
-    user_dict = {'bio':prof_user.bio,'followd': True}
+    user_dict = {'bio': prof_user.bio, 'followd': True}
     posts = post.objects.filter(user_fk=var[0]).order_by("post_id").reverse()
-    no_of_posts=len(posts)
-    user_dict['n_posts']=no_of_posts
-    user_dict['following']="dummy"
-    user_dict['followers']="dummy"
-    user_dict['user_image']="http://localhost:8000"+prof_user.Image.url
-    user_dict['posts']=[]
+    no_of_posts = len(posts)
+    user_dict['n_posts'] = no_of_posts
+    user_dict['following'] = getfollowing(prof_user.user_inher.username)
+    user_dict['followers'] = getfollowers(prof_user.user_inher.username)
+    user_dict['user_image'] = "http://localhost:8000"+prof_user.Image.url
+    user_dict['posts'] = []
     user_dict['cur_user'] = var[0].username
-    user_dict['is_followed']=False
-    check_rln=FriendRequest.objects.raw("SELECT * FROM home_FriendRequest WHERE sender_username='"+str(req_username)+"' AND receiver_username='"+var[0].username+"'")
-    
+    user_dict['is_followed'] = False
+    check_rln = FriendRequest.objects.raw("SELECT * FROM home_FriendRequest WHERE sender_username='"+str(
+        req_username)+"' AND receiver_username='"+var[0].username+"'")
+
     print(len(check_rln))
-    if len(check_rln)>=1:
-        user_dict['is_followed']=True
+    if len(check_rln) >= 1:
+        user_dict['is_followed'] = True
         for i in check_rln:
             print(i.get_followed())
-            if i.get_followed()==True:
-                user_dict['accepted']=True
+            if i.get_followed() == True:
+                user_dict['accepted'] = True
             else:
-                user_dict['accepted']=False
+                user_dict['accepted'] = False
     for p in posts:
-        user_post_obj={}
-        user_post_obj['photo_url']="http://localhost:8000/media/"+p.photo_url
-        user_post_obj['post_id']=p.post_id
-        user_post_obj['likes']=len(likes.objects.filter(post_id=p.post_id))
+        user_post_obj = {}
+        user_post_obj['photo_url'] = "http://localhost:8000/media/"+p.photo_url
+        user_post_obj['post_id'] = p.post_id
+        user_post_obj['likes'] = len(likes.objects.filter(post_id=p.post_id))
         # Add here one for comment
-        user_post_obj['comments']=30
+        user_post_obj['comments'] = 30
         user_dict['posts'].append(user_post_obj)
     # print(user_dict)
-    return render(request, 'home/show_users.html',user_dict)
-    
+    return render(request, 'home/show_users.html', user_dict)
+
     # return HttpResponse("lol")
+
 
 def add_post(request):
     if request.method == 'POST':
@@ -262,24 +283,25 @@ def add_post(request):
         form = ImageFrom()
     return render(request, 'home/add_post_1.html', {'form': form})
 
+
 @csrf_exempt
 def add_friend(request):
     # print(request.POST)
-    option=request.POST['option']
+    option = request.POST['option']
     print(option)
-    
-        
+
     destination_user = request.POST['destination_user']
     # print(destination_user)
-    destination_user_auth = User.objects.filter(username = destination_user)
+    destination_user_auth = User.objects.filter(username=destination_user)
     # print(destination_user_auth)
-    if(option=="unfriend"):
-        request_obj=FriendRequest.objects.filter(sender_username = request.POST['sender_username'],receiver_username = destination_user)
+    if(option == "unfriend"):
+        request_obj = FriendRequest.objects.filter(
+            sender_username=request.POST['sender_username'], receiver_username=destination_user)
         request_obj.delete()
-    
-    
+
     else:
-        request_obj = FriendRequest(sender_username = request.POST['sender_username'],receiver_username = destination_user)
+        request_obj = FriendRequest(
+            sender_username=request.POST['sender_username'], receiver_username=destination_user)
         request_obj.save()
     # return response
     return HttpResponse("add friend")
@@ -287,19 +309,57 @@ def add_friend(request):
 
 @csrf_exempt
 def add_friend_status(request):
-    sender_name=request.POST['sender_username']
-    reciever_name=request.POST['rec_name']
-    status=request.POST['option']
-    check_rln=FriendRequest.objects.raw("SELECT * FROM home_FriendRequest WHERE sender_username='"+sender_name+"' AND receiver_username='"+reciever_name+"'")
-    
-    if len(check_rln)>=1:
+    sender_name = request.POST['sender_username']
+    reciever_name = request.POST['rec_name']
+    status = request.POST['option']
+    check_rln = FriendRequest.objects.raw(
+        "SELECT * FROM home_FriendRequest WHERE sender_username='"+sender_name+"' AND receiver_username='"+reciever_name+"'")
+
+    if len(check_rln) >= 1:
         for req in check_rln:
-            req.request_status=True
+            req.request_status = True
             print(req)
             req.save()
     return HttpResponse("skcksn")
 
 
+def showFollowers(request, slug):
+    followers = FriendRequest.objects.filter(
+        receiver_username=slug, request_status=True)
+    # print(len(followers))
+    friend_list = {}
+    friend_list['friend'] = []
+    friend_list['cur_user'] = slug
+    for user in followers:
+        cur_user = customuser.objects.filter(
+            user_inher__username=user.sender_username)[0]
+        temp = {}
+        temp['username'] = user.sender_username
+        temp['image'] = 'http://localhost:8000'+cur_user.Image.url
+        friend_list['friend'].append(temp)
+
+    # print(friend_list)
+
+    return render(request, 'home/show_followers.html', friend_list)
+
+
+def showFollowing(request, slug):
+    followers = FriendRequest.objects.filter(sender_username=slug, request_status=True)
+    # print(len(followers))
+    friend_list = {}
+    friend_list['friend'] = []
+    friend_list['cur_user'] = slug
+    for user in followers:
+        cur_user = customuser.objects.filter(
+            user_inher__username=user.receiver_username)[0]
+        temp = {}
+        temp['username'] = user.receiver_username
+        temp['image'] = 'http://localhost:8000'+cur_user.Image.url
+        friend_list['friend'].append(temp)
+
+    # print(friend_list)
+
+    return render(request, 'home/show_following.html', friend_list)
 
 
 def logout_view(request):

@@ -1,0 +1,35 @@
+{% extends 'home/base.html' %}
+
+{% block feed %}
+
+<table class="table table-dark table-hover mt-3">
+    <thead>
+        <tr>
+            <th scope="col" class="display-3" style="font-size: 30px;"><b style="color: #ed5c7e;">{{cur_user}}</b> follows</th>
+            
+        </tr>
+  </thead>
+
+    {% for f in friend %}
+        <tr>
+
+            <td class="table-dark">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="{{f.image}}" style="width: 80px; height: 80px;" class="rounded-circle">
+                    </div>
+                    <div class="col-10 mt-4 display-3">
+                        <p style="font-size: 20px;"><b>{{f.username}}</b></p>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock feed %}
+
+{% block user_name %}
+{{user.get_username}}
+{% endblock user_name %}

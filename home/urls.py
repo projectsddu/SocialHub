@@ -15,6 +15,8 @@ urlpatterns = [
     path('/users/<slug:slug>',views.show_users,name="users"),
     path('/add_friend/',views.add_friend,name="addfriend"),
     path('/add_friend_status/',views.add_friend_status,name="change_status_fr"),
-      
+    path('/show_follwers/<slug:slug>',views.showFollowers,name="showfollowers"),
+    path('/show_following/<slug:slug>',views.showFollowing,name="showfollowing"),
+    
 ]
 
