@@ -168,13 +168,13 @@
         {% endif %}
         <ul class="data-user">
           <li>
-            <a><strong>{{n_posts}}</strong><span>Posts</span></a>
+            <a ><strong>{{n_posts}}</strong><span>Posts</span></a>
           </li>
           <li>
-            <a><strong>{{followers}}</strong><span>Followers</span></a>
+            <a href="{% url 'showfollowers' slug=cur_user %}"><strong>{{followers}}</strong><span>Followers</span></a>
           </li>
           <li>
-            <a><strong>{{following}}</strong><span>Following</span></a>
+            <a href="{% url 'showfollowing' slug=cur_user %}"><strong>{{following}}</strong><span>Following</span></a>
           </li>
         </ul>
       </div>

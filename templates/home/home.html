@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% block feed %}
-
+{% load humanize %}
 <div class="container" style="font-family: 'Roboto'">
   {% comment %} {{posts}} {% endcomment %} {% if posts %} {% for i in posts %}
   <div
@@ -64,11 +64,17 @@
 
             <li class="list-group-item">
               <p style="margin-top: 3px; margin-bottom: 3px">
-                <b>{{comment.name}}</b> {{comment.comment}}
+                <b>{{comment.commentor}}</b> {{comment.msg}}
               </p>
             </li>
-            {% endfor %} {% endif %}
+            
+            {% endfor %}
+            <a href="" style="text-decoration:none"><p style="margin-left:15px" class="mt-2">View All comments</p></a>
+            {% else %}
+            <b>No comments Yet</b>
+             {% endif %}
           </ul>
+          
         </div>
       </div>
     </div>
@@ -129,39 +135,45 @@
 {% block sugg %} 
 <div class="col">
 
-{% if notif %}
 <div class="card mt-3 row" style="width: 19rem;padding-right:20px">
   <ul class="list-group list-group-flush">
-    <li class="list-group-item bg-dark" style="color:white"><b>Notifications</b><button class="btn btn-light mx-3 rounded-circle" style="width:33px;height:33px;color:white;background-color:#c13584;border:1px solid #c13584">5</button></li>
+    <li class="list-group-item bg-dark" style="color:white"><b>Notifications</b><button class="btn btn-light mx-3 rounded-circle" style="width:33px;height:33px;color:white;background-color:#c13584;border:1px solid #c13584">{{notif|length}}</button></li>
+{% if notif %}
+
     
   
   {% for notification in notif %}
   
     <li class="list-group-item">
     <div>
-      <b>Title</b>
-      <p>{{notification}}</p>
+      <b>{{notification.title}} {{notification.date|naturalday}}</b><br><br> 
+      <p>{{notification.message}}</p>
     </div>
     
     </li>
 
   {% endfor %}
   </ul>
-  <div class="card-footer">
+  
+{% else %} 
+<div class="alert alert-danger alert-dismissible fade show mt-3" style="width:270px" role="alert">
+  <strong>No Notifications</strong> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+ {% endif %}
+<div class="card-footer">
     Notifications get updated on activity and gets deleted after one day
   </div>
 </div>
 </div>
-{% else %} nonotifs {% endif %}
 
 
 
-
-
-{% if pendings %}
 <div class="card mt-3 row" style="width: 19rem;padding-right:20px">
   <ul class="list-group list-group-flush friend_reqs" id="fr_lists">
-    <li class="list-group-item " style="color:black;background-color:#b8b8b8"><b>Follow Request</b><button class="btn btn-light mx-3 rounded-circle" style="width:33px;height:33px;color:white;background-color:#c13584;border:1px solid #c13584">5</button></li>
+    <li class="list-group-item bg-dark" style="color:white;background-color:#b8b8b8"><b>Follow Request</b><button class="btn btn-light mx-3 rounded-circle" style="width:33px;height:33px;color:white;background-color:#c13584;border:1px solid #c13584">{{pendings|length}}</button></li>
+{% if pendings %}
+
     
   
   {% for fr in pendings %}
@@ -184,13 +196,18 @@
   
   {% endfor %}
   </ul>
-  <div class="card-footer">
+  
+{% else %} 
+<div class="alert alert-danger alert-dismissible fade show mt-3" style="width:270px" role="alert">
+  <strong>No friend request till now</strong> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+ {% endif %}
+<div class="card-footer">
     Most recent requests appear on the top
   </div>
 </div>
 </div>
-{% else %} No FR {% endif %}
-
 
 
 

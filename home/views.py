@@ -2,7 +2,7 @@ import os
 from .models import post, likes
 from login.models import customuser
 from .forms import ImageFrom
-from .models import UploadImage, post, FriendRequest
+from .models import UploadImage, post, FriendRequest,Notifications,comments
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -51,6 +51,34 @@ def getLikesByPost(post_obj, cur_user):
     return str(like_count)+" people"
 
 
+def get_notifs(user):
+    query=Notifications.objects.filter(notify_to=user)
+    notification=[]
+    for cur_query in query:
+        cur_dict={}
+        cur_dict['message']=cur_query.notif_msg
+        cur_dict["title"]=cur_query.notif_title
+        cur_dict['date']=cur_query.date_added
+        notification.append(cur_dict)
+    return notification
+
+def getCommentsByPosts(pid):
+    comments_list=[]
+    comment_objs=comments.objects.filter(post_id=pid).order_by('date_added').reverse()
+    a=0
+    for comment in comment_objs:
+        if a==3:
+           break
+        else:
+            a=a+1
+        dict_temp={}
+        commentor=comment.commenter_user.username
+        comment_msg=comment.comment_text
+        dict_temp['commentor']=commentor
+        dict_temp['msg']=comment_msg
+        comments_list.append(dict_temp)
+    return comments_list
+
 @login_required
 def index(request):
     user_name = request.user
@@ -84,13 +112,13 @@ def index(request):
             final_bool = True
         print(current_user_profile)
         posts_to_show.append({'owner': owner, 'location': location, 'caption': caption, 'date': date_posted, 'likedby': likedby,
-                              'image_url': image_url, 'post_id': i.post_id, 'poster_image_url': user_image_url, 'comments': comments, 'isliked': final_bool})
+                              'image_url': image_url, 'post_id': i.post_id, 'poster_image_url': user_image_url, 'comments': getCommentsByPosts(i), 'isliked': final_bool})
         print(caption)
 
     user_details_dict = {
         'name': str(user_name.username),
         'posts': posts_to_show,
-        'notif': ['sknks', "skdksm"],
+        'notif': get_notifs(request.user),
         'pendings': reqs,
 
     }
@@ -174,9 +202,14 @@ def add_comment(request):
         owner = post_fetched.user_fk.username
         commentor = request.POST['comentr']
         filter_user = User.objects.filter(username=commentor)[0]
-        print(filter_user)
-        print(owner)
-        print(request.POST['comentr'])
+        print(type(filter_user))
+        # print(owner)
+        # print(request.POST['comment'])
+        # print(request.POST['comentr'])
+        comment_ob=comments(commenter_user=filter_user,post_id=post_fetched,comment_text=request.POST['comment'])
+       
+        print(comment_ob)
+        comment_ob.save()
         return HttpResponse("comment added")
 
 # Renders current user's profile
@@ -314,12 +347,16 @@ def add_friend_status(request):
     status = request.POST['option']
     check_rln = FriendRequest.objects.raw(
         "SELECT * FROM home_FriendRequest WHERE sender_username='"+sender_name+"' AND receiver_username='"+reciever_name+"'")
-
-    if len(check_rln) >= 1:
+    if status=="accept":
+        if len(check_rln) >= 1:
+            for req in check_rln:
+                req.request_status = True
+                print(req)
+                req.save()
+    else:
         for req in check_rln:
-            req.request_status = True
-            print(req)
-            req.save()
+            req.delete()
+            
     return HttpResponse("skcksn")
 
 

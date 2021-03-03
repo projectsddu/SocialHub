@@ -15,7 +15,7 @@ $(document).ready(function () {
         var saveData = $.ajax({
             type: 'POST',
             url: "http://127.0.0.1:8000/home/add_friend_status/",
-            data: {'sender_username' : parent_id, 'rec_name' : document.getElementById("loginuser").innerText,'option':'unfriend'},
+            data: {'sender_username' : parent_id, 'rec_name' : document.getElementById("loginuser").innerText,'option':'accept'},
             dataType: "text",
 
             success: function () {
@@ -35,8 +35,21 @@ $(document).ready(function () {
         var parent_id=id.slice(6,id.length);
         var parent_elem=document.getElementById(parent_id);
         console.log(parent_elem);
-        parent_elem.remove();
-        //call accept function
+        console.log("popopo")
+        var saveData = $.ajax({
+            type: 'POST',
+            url: "http://127.0.0.1:8000/home/add_friend_status/",
+            data: {'sender_username' : parent_id, 'rec_name' : document.getElementById("loginuser").innerText,'option':'reject'},
+            dataType: "text",
+
+            success: function () {
+                console.log("Success deleting")
+                parent_elem.remove();
+                }
+        });
+        saveData.error=function(){
+            alert("kxcksncks");
+        }
     })
     $('.commentsslide').slideUp(1)
     $('.comment').click(

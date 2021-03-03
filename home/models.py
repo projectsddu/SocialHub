@@ -25,6 +25,7 @@ class comments(models.Model):
     post_id = models.ForeignKey(post, on_delete=models.CASCADE)
     commenter_user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_text = models.TextField()
+    date_added=models.DateField(default=datetime.date.today)
 
 
 class likes(models.Model):
@@ -58,5 +59,15 @@ class FriendRequest(models.Model):
     def get_followed(self):
         return self.request_status
     
+
+class Notifications(models.Model):
+    notif_id=models.AutoField(primary_key=True)
+    notif_title=models.CharField(max_length=100)
+    notif_msg=models.TextField()
+    notify_to=models.ForeignKey(User,on_delete=models.CASCADE)
+    date_added=models.DateField(default=datetime.date.today)
+
+    def __str__(self):
+        return self.notif_msg
     
     
