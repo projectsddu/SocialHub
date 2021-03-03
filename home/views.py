@@ -21,7 +21,7 @@ import operator
 
 def getRequests(cur_user_name):
     unm=cur_user_name.get_username()
-    reqs=FriendRequest.objects.filter(receiver_username=unm).order_by('date')
+    reqs=FriendRequest.objects.filter(receiver_username=unm,request_status=False).order_by('date').reverse()
     req_list=[]
     for req in reqs:
         req_dict={}
@@ -283,6 +283,24 @@ def add_friend(request):
         request_obj.save()
     # return response
     return HttpResponse("add friend")
+
+
+@csrf_exempt
+def add_friend_status(request):
+    sender_name=request.POST['sender_username']
+    reciever_name=request.POST['rec_name']
+    status=request.POST['option']
+    check_rln=FriendRequest.objects.raw("SELECT * FROM home_FriendRequest WHERE sender_username='"+sender_name+"' AND receiver_username='"+reciever_name+"'")
+    
+    if len(check_rln)>=1:
+        for req in check_rln:
+            req.request_status=True
+            print(req)
+            req.save()
+    return HttpResponse("skcksn")
+
+
+
 
 def logout_view(request):
     logout(request)

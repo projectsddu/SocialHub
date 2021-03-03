@@ -160,22 +160,22 @@
 
 {% if pendings %}
 <div class="card mt-3 row" style="width: 19rem;padding-right:20px">
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-flush friend_reqs" id="fr_lists">
     <li class="list-group-item " style="color:black;background-color:#b8b8b8"><b>Follow Request</b><button class="btn btn-light mx-3 rounded-circle" style="width:33px;height:33px;color:white;background-color:#c13584;border:1px solid #c13584">5</button></li>
     
   
   {% for fr in pendings %}
   
-    <li class="list-group-item">
+    <li class="list-group-item frobj" id="{{fr.sender_name}}">
     <div>
-      <b>{{fr.sender_name}} started following you</b>
+      <b>{{fr.sender_name}} </b>wants to follow You
       <div class="row">
       
         <div class="col-6">
-          <button class="btn btn-success">Confirm</button>
+          <button class="btn btn-success fr_accept" id="fr_ac_{{fr.sender_name}}">Confirm</button>
         </div>
         <div class="col-6">
-          <button class="btn btn-danger">Delete</button>
+          <button class="btn btn-danger fr_reject" id="fr_rj_{{fr.sender_name}}">Delete</button>
         </div>
        
       </div>

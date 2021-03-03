@@ -1,5 +1,43 @@
 //Jquery Here
 $(document).ready(function () {
+    $('.fr_accept').click(function(){
+        console.log("accept")
+        //call accept function
+        var id=this.id
+        console.log(id)
+        var element=document.getElementById(id);
+        console.log(element);
+        var parent_id=id.slice(6,id.length);
+        var parent_elem=document.getElementById(parent_id);
+        console.log(parent_elem);
+        
+        // Ajax call to add friend request object status to true
+        var saveData = $.ajax({
+            type: 'POST',
+            url: "http://127.0.0.1:8000/home/add_friend_status/",
+            data: {'sender_username' : parent_id, 'rec_name' : document.getElementById("loginuser").innerText,'option':'unfriend'},
+            dataType: "text",
+
+            success: function () {
+                parent_elem.remove();
+                }
+        });
+        saveData.error=function(){
+            alert("kxcksncks");
+        }
+    })
+    $('.fr_reject').click(function(){
+        console.log("reject")
+        var id=this.id
+        console.log(id)
+        var element=document.getElementById(id);
+        console.log(element);
+        var parent_id=id.slice(6,id.length);
+        var parent_elem=document.getElementById(parent_id);
+        console.log(parent_elem);
+        parent_elem.remove();
+        //call accept function
+    })
     $('.commentsslide').slideUp(1)
     $('.comment').click(
         function () {
