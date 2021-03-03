@@ -62,12 +62,12 @@ def get_notifs(user):
         notification.append(cur_dict)
     return notification
 
-def getCommentsByPosts(pid):
+def getCommentsByPosts(pid,getall=False):
     comments_list=[]
     comment_objs=comments.objects.filter(post_id=pid).order_by('date_added').reverse()
     a=0
     for comment in comment_objs:
-        if a==3:
+        if a==3 and getall == False:
            break
         else:
             a=a+1

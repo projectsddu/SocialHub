@@ -69,12 +69,11 @@
             </li>
             
             {% endfor %}
-            <a href="" style="text-decoration:none"><p style="margin-left:15px" class="mt-2">View All comments</p></a>
+            <a href="{% url 'view_post' slug=i.post_id %}" style="text-decoration:none"><p style="margin-left:15px" class="mt-2">View All comments</p></a>
             {% else %}
             <b>No comments Yet</b>
              {% endif %}
           </ul>
-          
         </div>
       </div>
     </div>

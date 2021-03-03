@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'channels',
+    'ViewPost',
     'chat',
     'login.apps.LoginConfig',
     'home.apps.HomeConfig',
