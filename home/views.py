@@ -21,17 +21,21 @@ def add_notification(notif_title,notif_msg,notify_to):
     notification = Notifications(notif_title = notif_title, notif_msg = notif_msg, notify_to = notify_to)
     notification.save()
 
-def getfollowers(username):
+def getfollowers(username,full=False):
     query = FriendRequest.objects.filter(
         receiver_username=username, request_status=True)
-    return len(query)
+    if full==False:
+        return len(query)
+    else:
+        return query
 
-
-def getfollowing(username):
+def getfollowing(username,full=False):
     query = FriendRequest.objects.filter(
         sender_username=username, request_status=True)
-    return len(query)
-
+    if full==False:
+        return len(query)
+    else:
+        return query
 
 def getRequests(cur_user_name):
     unm = cur_user_name.get_username()
