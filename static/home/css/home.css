@@ -59,3 +59,9 @@ body{
 body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.design_alert {
+    color: white;
+    background-image: linear-gradient(45deg,#9e1b58,#f11859);
+    margin-top: -10px;
+}

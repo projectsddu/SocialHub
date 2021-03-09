@@ -140,22 +140,27 @@
 {% if notif %}
 
     
-  
+  <div class="mt-3">
   {% for notification in notif %}
   
-    <li class="list-group-item">
-    <div>
+    {% comment %} <li class="list-group-item"> {% endcomment %}
+    {% comment %} <div>
       <b>{{notification.title}} {{notification.date|naturalday}}</b><br><br> 
       <p>{{notification.message}}</p>
+    </div> {% endcomment %}
+    <div class="alert design_alert alert-dismissible fade show" style="width:270px" role="alert">
+      <strong>{{notification.title}} {{notification.date|naturalday}}</strong> 
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     
-    </li>
+    {% comment %} </li> {% endcomment %}
 
   {% endfor %}
+  </div>
   </ul>
   
 {% else %} 
-<div class="alert alert-danger alert-dismissible fade show mt-3" style="width:270px" role="alert">
+<div class="alert design_alert alert-dismissible fade show mt-3" style="width:270px" role="alert">
   <strong>No Notifications</strong> 
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -197,7 +202,7 @@
   </ul>
   
 {% else %} 
-<div class="alert alert-danger alert-dismissible fade show mt-3" style="width:270px" role="alert">
+<div class="alert design_alert alert-dismissible fade show mt-3" style="width:270px" role="alert">
   <strong>No friend request till now</strong> 
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>

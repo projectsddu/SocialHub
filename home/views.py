@@ -17,6 +17,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import operator
 
+def add_notification(notif_title,notif_msg,notify_to):
+    notification = Notifications(notif_title = notif_title, notif_msg = notif_msg, notify_to = notify_to)
+    notification.save()
 
 def getfollowers(username):
     query = FriendRequest.objects.filter(
@@ -131,11 +134,17 @@ def add_like_to_post(request):
         print(request.POST)
         pid = request.POST['post_liked']
         liker = request.POST['liker_name']
+         
         post_given = post.objects.filter(post_id=pid)[0]
+        owner = post_given.user_fk
+        print(owner)
         # print(type(post_given[0]))
         liker = User.objects.filter(username=liker)[0]
         like_given = likes(post_id=post_given, liker_user=liker)
         like_given.save()
+        notification = Notifications(notif_title=liker.username +" Liked your post.",notify_to=owner)
+        # notification.save()
+        add_notification(liker.username +" Liked your post.","",owner)
         return HttpResponse("recieved post")
     else:
         return HttpResponse("<h1>404 Page not found</h1>")
@@ -203,6 +212,8 @@ def add_comment(request):
         commentor = request.POST['comentr']
         filter_user = User.objects.filter(username=commentor)[0]
         print(type(filter_user))
+        # function call
+        add_notification(commentor + " commented on your post.","",post_fetched.user_fk)
         # print(owner)
         # print(request.POST['comment'])
         # print(request.POST['comentr'])
@@ -348,6 +359,7 @@ def add_friend_status(request):
     check_rln = FriendRequest.objects.raw(
         "SELECT * FROM home_FriendRequest WHERE sender_username='"+sender_name+"' AND receiver_username='"+reciever_name+"'")
     if status=="accept":
+        add_notification(reciever_name + " accepted your request.","",User.objects.filter(username=sender_name)[0])
         if len(check_rln) >= 1:
             for req in check_rln:
                 req.request_status = True
