@@ -6,6 +6,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import customuser
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+
+
+
 
 def login(request):
     return render(request,'login/base.html')
@@ -68,3 +74,25 @@ def check_user_name(username):
     if len(user) == 0:
         return None
     return (user)
+
+
+def forgot_password(request):
+    if request.method=="POST":
+        username=request.POST["username"]
+        print(username)
+        # message=render_to_string(template_name="login/forgot_template.html")
+        # send_mail(
+        #     'Subject here',
+        #     message,
+        #     'computerdummy960@gmail.com',
+        #     ['confusedjogger01@gmail.com'],
+        #     fail_silently=False,
+        # )
+        subject, from_email, to = 'hello', 'computerdummy960@gmail.com', 'confusedjogger01@gmail.com'
+        text_content = 'This is an important message.'
+        html_content = '<h1>Jenil Gandhi</h1>'
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+        return HttpResponse("submitted")
+    return render(request,'login/forgot_password.html')

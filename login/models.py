@@ -7,4 +7,5 @@ class customuser(models.Model):
     Image=models.ImageField(upload_to='home/user_images',default="media/asset/images/1_TrnL6Aj.PNG")
     bio=models.TextField()
     user_inher=models.ForeignKey(User,on_delete=models.CASCADE)
+    email=models.CharField(max_length=150,default="not@provided.com")
 
