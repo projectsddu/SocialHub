@@ -1,14 +1,52 @@
-from django.shortcuts import render, HttpResponse,redirect
+from django.shortcuts import render, HttpResponse,redirect,Http404
 from home.views import getfollowers, getfollowing
 from home.models import FriendRequest, customuser
 from chat.models import ChatRoom, Subscriber, Message
 from django.contrib.auth.models import User
+from login.models import customuser
 # Create your views here.
 
+def getMessagesByChatRoom(room_id,user):
+    messages=Message.objects.filter(chat_room_id=room_id)
+    ret_dict={}
+    ret_dict["messages"]=[]
+    for message in messages:
+        temp_dict={}
+        if user==message.sender:
+            temp_dict["type"]="me"
+        else:
+            temp_dict["type"]="you"
+
+        temp_dict["date"]=message.date_time
+        temp_dict["sender"]=message.sender.username
+        temp_dict["message"]=message.message
+        ret_dict["messages"].append(temp_dict)
+    return ret_dict
+
+def getAllSubscribersByChatRoom(room_id):
+    subs=Subscriber.objects.filter(chat_room_id=room_id)
+    ret_list=[]
+    for sub in subs:
+        ret_list.append(sub.user_fk)
+    return ret_list
+
+def getSubscribersByChatRoom(room_id,cur_user):
+    subs=Subscriber.objects.filter(chat_room_id=room_id)
+    for sub in subs:
+        if sub.user_fk!=cur_user :
+            # ret_dict={}
+            # ret_dict["username"]=sub.user_fk.username
+            cust_user=customuser.objects.filter(user_inher=cur_user)[0]
+            # ret_dict["image"]=cust_user.Image.url
+            return sub.user_fk.username,cust_user.Image.url
 
 def index(request, slug):
-
-    return render(request, 'chat/chat.html')
+    ret_dict=getMessagesByChatRoom(slug,request.user)
+    ret_dict["chatter"],ret_dict["chatter_image"]=getSubscribersByChatRoom(slug,request.user)
+    print(ret_dict)
+    if request.user not in getAllSubscribersByChatRoom(slug) :
+        return HttpResponse("<h1>Sorry the page you requested does not exists</h1><br><h2>You are not authorized to go here</h2>")
+    return render(request, 'chat/chat.html',ret_dict)
 
 
 def getPrivateChatRoom(user1, user2):

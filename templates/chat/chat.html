@@ -1,3 +1,5 @@
+{% load humanize %}
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -8,316 +10,118 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link href="{% static 'chat/css/chat_page.css' %}" rel="stylesheet">
+        <link href="{% static 'home/css/home.css' %}" rel="stylesheet">
 
-    <title>Hello, world!</title>
+    <title>Chat with {{chatter}}</title>
 </head>
 
-<style>
-    body {
-        background-color: #918787;
-        font-family: Arial;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    #container {
-        width: 1000px;
-        height: 740px;
-        background: rgb(41, 39, 39);
-        margin: 0 auto;
-        font-size: 0;
-
-        overflow: hidden;
-    }
-
-    main {
-        width: 1000px;
-        height: 400px;
-        display: inline-block;
-        font-size: 15px;
-        vertical-align: top;
-    }
 
 
-    h2,
-    h3 {
-        margin: 0;
-    }
+<body style="background-color:#2C2F33">
+<nav class="fixed navbar nav1 sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid navi">
+      <a class="navbar-brand" href="http://localhost:8000/home">
+        <p class="display-3" style="font-size: 30px; margin: 10px">
+          <b style="color: aliceblue">SocialHub</b>
+        </p>
+        <p></p>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mt-3 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active display-3" style="font-size: 20px" aria-current="page"
+              href="http://localhost:8000/home"><b style="color: aliceblue">Home</b></a>
+          </li>
+          <li class="nav-item display-3 mx-3" style="font-size: 20px">
+            <a class="nav-link active" href="home/add_post/"><b style="color: aliceblue">Post</b></a>
+          </li>
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle display-3" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-expanded="false" style="font-size: 20px; color: aliceblue ;">
+              <div id="usnm">
+                <b style="color: aliceblue" id="cur_user">{{user.get_username}}</b>
+              </div>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" style="" href="http://localhost:8000/home/profile">Profile</a>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'chat_home' %}">Chat</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="http://localhost:8000/home/logout">Logout</a>
+              </li>
 
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
+            </ul>
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
+          
+  
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: rgb(122, 121, 121);
-    }
+          <li style="margin-left:600px;margin-top:10px">
+          
 
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgb(95, 91, 91);
-    }
+            
 
-    .status {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 7px;
-    }
+          </li>
+          </li>
 
-    .green {
-        background-color: #58b666;
-    }
+          <li class="mt-1 mx-3" style="padding-left: 20px">
+            <a href="http://localhost:8000/search" style="color: aliceblue; text-decoration: none">
+              <div style="border: 2px solid white; border-radius: 20px">
+                <div style="
+                      padding-top: 5px;
+                      padding-left: 10px;
+                      padding-bottom: 5px;
+                      padding-right: 20px;
+                    ">
+                  <b style="font-size: 18px">Search</b>
+                  <i class="fa fa-search mx-3" aria-hidden="true"></i>
+                </div>
+              </div>
+            </a>
+          </li>
 
-    .orange {
-        background-color: #ff725d;
-    }
-
-    .blue {
-        background-color: #6fbced;
-        margin-right: 0;
-        margin-left: 7px;
-    }
-
-    main header {
-        height: 110px;
-        width: 1000px;
-        padding: 30px 20px 30px 40px;
-    }
-
-    main header>* {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    main header img:first-child {
-        border-radius: 50%;
-    }
-
-    main header img:last-child {
-        width: 24px;
-        margin-top: 8px;
-    }
-
-    main header div {
-        margin-left: 10px;
-        margin-right: 145px;
-    }
-
-    main header h2 {
-        font-size: 16px;
-        margin-bottom: 5px;
-        color: #ffffff;
-    }
-
-    main header h3 {
-        font-size: 14px;
-        font-weight: normal;
-        color: #ffffff;
-    }
-
-    #chat {
-        padding-left: 0;
-        margin: 0;
-        list-style-type: none;
-        overflow-y: scroll;
-        height: 535px;
-        border-top: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-    }
-
-    #chat li {
-        padding: 10px 30px;
-    }
-
-    #chat h2,
-    #chat h3 {
-        display: inline-block;
-        font-size: 13px;
-        font-weight: normal;
-
-    }
-
-    #chat h3 {
-        color: #bbb;
-    }
-
-    #chat .entete {
-        margin-bottom: 5px;
-    }
-
-    #chat .message {
-        padding: 20px;
-        color: #fff;
-        line-height: 25px;
-        max-width: 90%;
-        display: inline-block;
-        text-align: left;
-        border-radius: 5px;
-    }
-
-    #chat .me {
-        text-align: right;
-    }
-
-    #chat .you .message {
-        background-color: #ff725d;
-    }
-
-    #chat .me .message {
-        background-color: #6fbced;
-    }
-    #send_icon{
-        color:#c7bebe
-    }
-    #send_icon:hover{
-      color:#0faffa;
-    }
-
-    main footer {
-        height: 155px;
-        padding: 20px 30px 10px 20px;
-
-
-    }
-
-    main footer textarea {
-        resize: none;
-        border: none;
-        display: block;
-        width: 1000px;
-        height: 65px;
-        border-radius: 3px;
-        padding: 20px;
-        font-size: 13px;
-        margin-bottom: 13px;
-        background-color: #d1cfcf;
-    }
-
-    main footer textarea:focus {
-        outline: none;
-        border: 1px solid #696665;
-        background-color: #c7bebe;
-        color: #131312
-    }
-
-    main footer textarea::placeholder {
-        color: #181717;
-
-    }
-
-    main footer a {
-        text-decoration: none;
-        text-transform: uppercase;
-        font-weight: bold;
-        color: #6fbced;
-        vertical-align: top;
-        margin-left: 0px;
-
-        display: inline-block;
-    }
-
-    main footer a:hover {
-        color: #ff725d
-    }
-</style>
-
-<body>
-    <div id="cur_user"> 
-        {{user.get_username}}
+        </ul>
+      </div>
     </div>
+  </nav>
+
+     
+   
     <script src="https://kit.fontawesome.com/114072733a.js" crossorigin="anonymous"></script>
 
     <div id="container">
 
         <main>
             <header>
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+                <img src="http://localhost:8000{{chatter_image}}" alt="" style="width:60px;height:60px;object-fit:cover">
                 <div>
-                    <h2>Chat with Vincent Porter</h2>
-                    <h3>already 1902 messages</h3>
+                    <h1 style="color:white"><b>{{chatter}}</b></h1>
+                    
                 </div>
 
             </header>
             <ul id="chat">
-                <li class="you">
+                {% for message in messages %}
+                <li class="{{message.type}}">
                     <div class="entete">
-                        <span class="status orange"></span>
-                        <h2 style="color:#ff725d">Vincent</h2>
-                        <h3>10:12AM, Today</h3>
-                    </div>
-
-                    <div class="message">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing
-                        elit. Aenean commodo ligula eget dolor.
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="entete">
-                        <h3>10:12AM, Today</h3>
-                        <h2 style="color:#87d7f0">Vincent</h2>
+                        <h3>{{message.date|naturaltime}}</h3>
+                        <h2><b>{{message.sender}}</b></h2>
                         <span class="status blue"></span>
                     </div>
                     <div class="triangle"></div>
                     <div class="message">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing
-                        elit. Aenean commodo ligula eget dolor.
+                        {{message.message}}
                     </div>
                 </li>
-                <li class="me">
-                    <div class="entete">
-                        <h3>10:12AM, Today</h3>
-                        <h2>Vincent</h2>
-                        <span class="status blue"></span>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                        OK
-                    </div>
-                </li>
-                <li class="you">
-                    <div class="entete">
-                        <span class="status orange"></span>
-                        <h2>Vincent</h2>
-                        <h3>10:12AM, Today</h3>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing
-                        elit. Aenean commodo ligula eget dolor.
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="entete">
-                        <h3>10:12AM, Today</h3>
-                        <h2>Vincent</h2>
-                        <span class="status blue"></span>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing
-                        elit. Aenean commodo ligula eget dolor.
-                    </div>
-                </li>
-                <li class="me">
-                    <div class="entete">
-                        <h3>10:12AM, Today</h3>
-                        <h2>Vincent</h2>
-                        <span class="status blue"></span>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                        OK
-                    </div>
-                </li>
+                {% endfor %}
             </ul>
             <footer class="row">
                 <textarea id="msg_area" class="col-10" placeholder="Type your message"></textarea>
@@ -336,6 +140,10 @@
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
     </script>
     <script>
+    window.onload=function(){
+      var chat_elem=document.getElementById("chat")
+            chat_elem.scrollTop=chat_elem.scrollHeight;
+    }
         document.querySelector("#msg_area").onkeyup = function(event)
         {
             if(event.keyCode==13)
@@ -354,20 +162,22 @@
 
 
         }
-        
+        ws.error=function(){
+          alert("Something went wrong!!!!")
+        }
         var urlString=window.location.href;
         var splitted=urlString.split("/")
         var chat_room_name=splitted[splitted.length -1];
         console.log(chat_room_name);
         var ws = new WebSocket('ws://localhost:8000/ws/chat/'+chat_room_name)
         ws.onopen = function (event) {
-            alert("connection successful!")
+            console.log("connection successful!")
 
         }
         ws.onmessage = function (event) {
             var today = new Date();
             var time=today.getHours()+":"+today.getMinutes();
-            
+            console.log("uashdujhasd")
 
             var recdata = JSON.parse(event.data)
             var msgdom = document.getElementById("chat");

@@ -22,10 +22,12 @@ class ChatRoom(models.Model):
     
 # store messages for specific chat room
 class Message(models.Model):
+    message_id = models.IntegerField(primary_key=True)
     chat_room_id = models.IntegerField()
     message = models.TextField()
     date_time = models.DateTimeField(auto_now_add=True)
     sender=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    is_read=models.BooleanField(default=False)
     
 # already exist
 class Subscriber(models.Model):
