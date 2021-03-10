@@ -354,7 +354,12 @@
 
 
         }
-        var ws = new WebSocket('ws://localhost:8000/ws/chat/jenil_keval')
+        
+        var urlString=window.location.href;
+        var splitted=urlString.split("/")
+        var chat_room_name=splitted[splitted.length -1];
+        console.log(chat_room_name);
+        var ws = new WebSocket('ws://localhost:8000/ws/chat/'+chat_room_name)
         ws.onopen = function (event) {
             alert("connection successful!")
 

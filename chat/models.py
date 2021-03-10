@@ -17,16 +17,19 @@ class ChatRoom(models.Model):
     owner = models.ForeignKey(User,on_delete=models.CASCADE)    #created by owner
     is_group = models.BooleanField(default=False)   #check status
     
+    def getChatRoomId(self):
+        return self.chat_room_id
     
 # store messages for specific chat room
 class Message(models.Model):
     chat_room_id = models.IntegerField()
     message = models.TextField()
     date_time = models.DateTimeField(auto_now_add=True)
+    sender=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     
 # already exist
 class Subscriber(models.Model):
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    user_fk = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     chat_room_id = models.IntegerField()
     
     
