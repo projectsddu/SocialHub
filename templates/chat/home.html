@@ -1,24 +1,50 @@
-{% extends 'home/base.html' %}
-{% block user_name %}{{user.get_username}}{% endblock user_name %}
-{% block feed %}
+{% extends 'home/base.html' %} {% block user_name %}{{user.get_username}}{%endblock user_name %} {% block feed %}
 
-    <ul class="list-group">
-  <li class="list-group-item design_alert mt-3 d-flex justify-content-between align-items-center">
+<ul class="list-group">
+  <li
+    class="list-group-item design_alert mt-3 d-flex justify-content-between align-items-center"
+  >
     <h4><b>Chat with these people in your bucket list</b></h4>
-   
   </li>
-    {% for follower in followers %}
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span><img src={{follower.image}} style="width:40px;height:40px" class="rounded-circle"><b>{{follower.username}}</b></span>
-    <span class="badge bg-primary rounded-pill">2</span>
-  </li>
-  {% endfor %}
-  {% for follower in following %}
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span><img src={{follower.image}} style="width:40px;height:40px" class="rounded-circle"><b> {{follower.username}}</b></span>
-    <span class="badge bg-primary rounded-pill">2</span>
-  </li>
-  {% endfor %}
-  
+  {% for follower in followers %}
+   {% with ""|add:follower.username|add:"_"|add:user.get_username as slugfield %}
+
+  <a
+    href="{% url 'chat_redirect' slug=slugfield %}"
+    style="text-decoration: none"
+  >
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <span
+        ><img
+          src="{{follower.image}}"
+          style="width: 40px; height: 40px"
+          class="rounded-circle"
+        /><b>{{follower.username}}</b></span
+      >
+      <span class="badge bg-primary rounded-pill">2</span>
+    </li>
+  </a>
+  {% endwith %} {% endfor %} 
+  {% for follower in following %} {% with ""|add:follower.username|add:"_"|add:user.get_username as slugfield %}
+  <a
+    href="{% url 'chat_redirect' slug=slugfield %}"
+    style="text-decoration: none"
+  >
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <span
+        ><img
+          src="{{follower.image}}"
+          style="width: 40px; height: 40px"
+          class="rounded-circle"
+        /><b> {{follower.username}}</b></span
+      >
+      <span class="badge bg-primary rounded-pill">2</span>
+    </li>
+  </a>
+  {% endwith %} {% endfor %}
 </ul>
 {% endblock feed %}

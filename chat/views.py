@@ -2,9 +2,14 @@ from django.shortcuts import render,HttpResponse
 from home.views import getfollowers,getfollowing
 from home.models import FriendRequest,customuser
 # Create your views here.
-def index(request):
+def index(request,slug):
+
     return render(request,'chat/chat.html')
 
+
+def chat_redirect(request,slug):
+    print(slug.split("_"))
+    return HttpResponse("<h1>Redirect</h1>")
 def home(request):
     slug=request.user.username
     followers = FriendRequest.objects.filter(
