@@ -118,7 +118,7 @@
                     </div>
                     <div class="triangle"></div>
                     <div class="message">
-                        {{message.message}}
+                        {{message.message|safe}}
                     </div>
                 </li>
                 {% endfor %}
@@ -162,17 +162,16 @@
 
 
         }
-        ws.error=function(){
-          alert("Something went wrong!!!!")
-        }
+       
         var urlString=window.location.href;
         var splitted=urlString.split("/")
         var chat_room_name=splitted[splitted.length -1];
         console.log(chat_room_name);
         var ws = new WebSocket('ws://localhost:8000/ws/chat/'+chat_room_name)
+      
         ws.onopen = function (event) {
             console.log("connection successful!")
-
+            alert("Connection successful");
         }
         ws.onmessage = function (event) {
             var today = new Date();

@@ -17,6 +17,7 @@ urlpatterns = [
     path('/add_friend_status/',views.add_friend_status,name="change_status_fr"),
     path('/show_follwers/<slug:slug>',views.showFollowers,name="showfollowers"),
     path('/show_following/<slug:slug>',views.showFollowing,name="showfollowing"),
+    path('/remove_notification',views.removeNotifications,name="remove_notification"),
     
 ]
 

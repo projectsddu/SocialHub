@@ -88,11 +88,11 @@ def forgot_password(request):
         #     ['confusedjogger01@gmail.com'],
         #     fail_silently=False,
         # )
-        subject, from_email, to = 'hello', 'computerdummy960@gmail.com', 'confusedjogger01@gmail.com'
+        subject, from_email, to = 'Reset Password for SocialHub', 'computerdummy960@gmail.com', 'confusedjogger01@gmail.com'
         text_content = 'This is an important message.'
-        html_content = '<h1>Jenil Gandhi</h1>'
+        html_content = 'Click <a href="http://localhost:8000">here</a> to reset your password'
         msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
-        return HttpResponse("submitted")
+        return HttpResponse("An email has sent to the registered email ID")
     return render(request,'login/forgot_password.html')

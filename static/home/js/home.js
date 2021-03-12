@@ -1,5 +1,24 @@
 //Jquery Here
 $(document).ready(function () {
+    
+    $(".notification").click(function(){
+        var id=this.id;
+        console.log("id:"+id);
+        var saveData = $.ajax({
+            type: 'POST',
+            url: "http://localhost:8000/home/remove_notification",
+            data: {'notif_id' : id},
+            dataType: "text",
+
+            success: function () {
+                console.log("success");
+                }
+        });
+        saveData.error=function(){
+            alert("kxcksncks");
+        }
+
+    })
     $('.fr_accept').click(function(){
         console.log("accept")
         //call accept function

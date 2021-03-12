@@ -1,5 +1,6 @@
 {% extends 'home/base.html' %} {% block feed %}
 {% load humanize %}
+{% load static %}
 <div class="container" style="font-family: 'Roboto'">
   {% comment %} {{posts}} {% endcomment %} {% if posts %} {% for i in posts %}
   <div
@@ -27,9 +28,23 @@
           </div>
           <div class="row-6">
             <p style="font-size: 12px">{{i.location}}</p>
+            
           </div>
         </div>
       </div>
+      <div class="col-2">
+        <div class="dropdown ml-4 mt-1" >
+      <a class="dropdown-toggle" data-toggle="dropdown" style="text-decoration:none;color:black" href="#"><svg aria-hidden="true" focusable="false"  data-prefix="fas" data-icon="ellipsis-v" style="height:25px" class="svg-inline--fa fa-ellipsis-v fa-w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path></svg></a>
+      <ul style="width:300px" class="dropdown-menu" role="menu" aria-labelledby="dLabel">            
+        <li><a style="text-decoration:none;color:black" href="http://localhost:8000/view_post/{{i.post_id}}" class="copyLink" onclick="copyToClipboard()"><b>Share Post:</b></a><br>Use this link to share the post<br>http://localhost:8000{% url 'view_post' slug=i.post_id %}</li>
+        <li class="divider"></li>
+        <hr>
+        <li><a style="text-decoration:none;color:black" href="http://localhost:8000/view_post/{{i.post_id}}"><b>View post</b></a></li>
+        <li class="divider"></li>
+      </ul>
+    </div> 
+      </div>
+      
     </div>
     <img
       src="http://localhost:8000/media/{{i.image_url}}"
@@ -149,8 +164,8 @@
       <p>{{notification.message}}</p>
     </div> {% endcomment %}
     <div class="alert design_alert alert-dismissible fade show" style="width:270px" role="alert">
-      <strong>{{notification.title}} {{notification.date|naturalday}}</strong> 
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <strong >{{notification.title}} {{notification.date|naturalday}}</strong> 
+      <button  id="{{notification.id}}" type="button" class="notification btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     
     {% comment %} </li> {% endcomment %}
@@ -218,5 +233,5 @@
 </div>
  {% endblock sugg %}
 {% block ads %}
-
+  
 {% endblock ads %}

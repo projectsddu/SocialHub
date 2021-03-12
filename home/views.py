@@ -59,13 +59,14 @@ def getLikesByPost(post_obj, cur_user):
 
 
 def get_notifs(user):
-    query=Notifications.objects.filter(notify_to=user)
+    query=Notifications.objects.filter(notify_to=user).order_by('date_added').reverse()
     notification=[]
     for cur_query in query:
         cur_dict={}
         cur_dict['message']=cur_query.notif_msg
         cur_dict["title"]=cur_query.notif_title
         cur_dict['date']=cur_query.date_added
+        cur_dict["id"]=cur_query.notif_id
         notification.append(cur_dict)
     return notification
 
@@ -418,3 +419,13 @@ def showFollowing(request, slug):
 def logout_view(request):
     logout(request)
     return redirect('http://localhost:8000/')
+
+@csrf_exempt
+def removeNotifications(request):
+    if request.method=="POST":
+        notif_id=request.POST["notif_id"]
+        notification=Notifications.objects.filter(notif_id=notif_id)
+        notification.delete()
+        return HttpResponse("Notification deleted")
+    else:
+        return HttpResponse("<h1>Page not found</h1>")

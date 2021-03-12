@@ -9,7 +9,7 @@
             
         </tr>
     </thead>
-
+    {% if friend %}
     {% for f in friend %}
         <tr >
 
@@ -26,6 +26,13 @@
 
         </tr>
     {% endfor %}
+    {% else %}
+    <td class="table-dark rounded" >
+                <div class="row">
+                    <h1>No followers till now</h1>
+                </div>
+            </td>
+    {% endif %}
 </table>
 
 {% endblock feed %}
