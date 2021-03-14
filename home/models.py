@@ -19,6 +19,9 @@ class post(models.Model):
 
     def __str__(self):
         return str(self.post_id)
+    
+    def __lt__(self,post_obj):
+        return self.post_id < post_obj.post_id
 
 
 class comments(models.Model):

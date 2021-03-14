@@ -3,7 +3,7 @@ from .models import post, likes
 from login.models import customuser
 from .forms import ImageFrom
 from .models import UploadImage, post, FriendRequest,Notifications,comments
-from datetime import datetime
+from datetime import datetime,date
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -16,6 +16,28 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import operator
+
+def getPostByFollowings(current_user):
+    
+    followings = getfollowing(current_user,True)
+    cur_user = User.objects.filter(username = current_user)[0]
+    # print(cur_user)
+    post_list = []
+    own_post = post.objects.filter(user_fk = cur_user, date_posted = date.today())
+    
+    # print(own_post)
+    for f in followings:
+        username = User.objects.filter(username = f.receiver_username)[0]
+        posts = post.objects.filter(user_fk = username)
+        for p in posts:
+            post_list.append(p)
+            
+    post_list.sort(reverse = True)
+    if len(own_post) != 0:
+        own_post = own_post[0]
+        post_list.insert(0,own_post)
+    return post_list
+    
 
 def add_notification(notif_title,notif_msg,notify_to):
     notification = Notifications(notif_title = notif_title, notif_msg = notif_msg, notify_to = notify_to)
@@ -87,12 +109,14 @@ def getCommentsByPosts(pid,getall=False):
         comments_list.append(dict_temp)
     return comments_list
 
+
+
 @login_required
 def index(request):
     user_name = request.user
     print(user_name.username)
     posts_to_show = []
-    posts_query = post.objects.all().order_by('post_id').reverse()
+    posts_query = getPostByFollowings(user_name)
     print(posts_query)
     print("++++++++++++++++++++++++++++++++++++++++")
     print(getRequests(request.user))
@@ -268,6 +292,14 @@ def show_users(request, slug):
     prof_user = customuser.objects.filter(user_inher=var[0])[0]
     # print(prof_user.bio)
     user_dict = {'bio': prof_user.bio, 'followd': True}
+    allowed = False
+    allowed_obj_1 = FriendRequest.objects.filter(sender_username = req_username, receiver_username = slug, request_status = True)
+    allowed_obj_2 = FriendRequest.objects.filter(sender_username = slug, receiver_username = req_username, request_status = True)
+    
+    print(allowed_obj_1, allowed_obj_2)
+    if len(allowed_obj_1) != 0 or len(allowed_obj_2) != 0:
+        allowed = True
+    
     posts = post.objects.filter(user_fk=var[0]).order_by("post_id").reverse()
     no_of_posts = len(posts)
     user_dict['n_posts'] = no_of_posts
@@ -277,9 +309,14 @@ def show_users(request, slug):
     user_dict['posts'] = []
     user_dict['cur_user'] = var[0].username
     user_dict['is_followed'] = False
+    user_dict['allowed'] = allowed
     check_rln = FriendRequest.objects.raw("SELECT * FROM home_FriendRequest WHERE sender_username='"+str(
         req_username)+"' AND receiver_username='"+var[0].username+"'")
-
+    
+    # make profile public 
+    if user_dict['followers'] >= 1000:
+        user_dict['allowed'] = True
+        
     print(len(check_rln))
     if len(check_rln) >= 1:
         user_dict['is_followed'] = True
@@ -429,3 +466,5 @@ def removeNotifications(request):
         return HttpResponse("Notification deleted")
     else:
         return HttpResponse("<h1>Page not found</h1>")
+    
+

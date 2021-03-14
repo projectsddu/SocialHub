@@ -178,30 +178,32 @@
           </li>
         </ul>
       </div>
-      <div class="row">
-        {% if posts %} {% for post in posts %}
+      {% if allowed %}
+        <div class="row">
+          {% if posts %} {% for post in posts %}
 
-        <div class="col-4">
-          <img
-            src="{{post.photo_url}}"
-            class="rounded-0 cover my-3 myimg"
-            style="width: 220px; height: 220px"
-          />
-          <div class="mydiv">
-            <div class="row">
-              <div class="col-2" style="margin-right: 20px">
-                <i class="fas fa-heart fa-lg">{{post.likes}}</i>
+          <div class="col-4">
+            <img
+              src="{{post.photo_url}}"
+              class="rounded-0 cover my-3 myimg"
+              style="width: 220px; height: 220px"
+            />
+            <div class="mydiv">
+              <div class="row">
+                <div class="col-2" style="margin-right: 20px">
+                  <i class="fas fa-heart fa-lg">{{post.likes}}</i>
+                </div>
+                <div class="col-1"><i class="fas fa-comment fa-lg">13</i></div>
               </div>
-              <div class="col-1"><i class="fas fa-comment fa-lg">13</i></div>
             </div>
           </div>
+          {% endfor %} {% else %}
+          <h3 style="margin-top: 30px; margin-left: 300px">
+            <b>No posts yet</b>
+          </h3>
+          {% endif %}
         </div>
-        {% endfor %} {% else %}
-        <h3 style="margin-top: 30px; margin-left: 300px">
-          <b>No posts yet</b>
-        </h3>
-        {% endif %}
-      </div>
+      {% endif %}
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
