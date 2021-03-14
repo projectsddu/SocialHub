@@ -19,9 +19,12 @@ def view_post(request,slug):
         'date_added': post_display.date_posted,
         'photo_url': photo_url
     }
-    
-    if check_relation(request.user.username, post_owner) == False:
+    if request.user.username==post_owner:
+        return render(request,'ViewPost/index.html',display_dict)
+
+    if check_relation(request.user.username, post_owner) == False :
         return HttpResponse("You are not allowed!!!!")
+    
         
     return render(request,'ViewPost/index.html',display_dict)
 

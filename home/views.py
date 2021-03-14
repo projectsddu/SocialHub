@@ -71,9 +71,12 @@ def getRequests(cur_user_name):
     return req_list
 
 
-def getLikesByPost(post_obj, cur_user):
+def getLikesByPost(post_obj, cur_user,option=False):
+
     like = likes.objects.filter(post_id=post_obj.post_id)
     like_count = len(like)
+    if option==True:
+        return like_count
     you = likes.objects.filter(post_id=post_obj.post_id, liker_user=cur_user)
     if len(you) == 1:
         return "You and "+str(like_count-1)+" other"
@@ -86,9 +89,9 @@ def get_notifs(user):
     for cur_query in query:
         cur_dict={}
         cur_dict['message']=cur_query.notif_msg
-        cur_dict["title"]=cur_query.notif_title
         cur_dict['date']=cur_query.date_added
         cur_dict["id"]=cur_query.notif_id
+        cur_dict["title"]=cur_query.notif_title
         notification.append(cur_dict)
     return notification
 
@@ -132,7 +135,7 @@ def index(request):
         current_user = i.user_fk
         current_user_profile = customuser.objects.filter(
             user_inher=current_user)
-        user_image_url = current_user_profile[0].Image.url
+        user_image_url = "http://localhost:8000"+current_user_profile[0].Image.url
         # just send 3-4 comments over here and then make another app for viewing whole full page posts
         comments = [{'name': 'jenil', 'comment': 'Wow when did you go here'}, {
             'name': 'Kenil', 'comment': 'Take us also'}]

@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index, name="business_dashboard"),
     path('/your_business', views.business, name="business"),
     path('/advertise', views.advertise, name="advertise"),
+    path('/getdata', views.getFollowers, name="getdata"),
 ]
     

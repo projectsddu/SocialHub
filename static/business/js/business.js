@@ -1,21 +1,43 @@
+$(document).ready(function(){
+    // console.log("knksdnksnfknsdkfnsdknfksdnfknsdkfnksd");
+    console.log("Loading the data");
 
+
+    var followers;
+    var like_labels;
+    var likes;
+    var monthly;
+    var saveData = $.ajax({
+        type: 'POST',
+        url: "http://localhost:8000/business/getdata",
+        data: {'username':document.getElementById("username").innerText},
+        dataType: "text",
+
+        success: function (data) {
+                console.log(data)
+                var reponse=JSON.parse(data)
+                followers=reponse["followers"];
+                like_labels=reponse["like_labels"]
+                likes=reponse["likes"]
+                monthly=reponse["monthly"]
+            }
+    });
+    saveData.error=function(){
+        alert("kxcksncks");
+    }
+
+
+setTimeout(function(){
 var ctx = document.getElementById("myChart").getContext("2d");
 var myChart = new Chart(ctx, {
     type: "line",
 
     data: {
-        labels: [
-            "12:04:2020",
-            "Blue",
-            "Yellow",
-            "Green",
-            "Purple",
-            "Orange",
-        ],
+        labels: like_labels,
         datasets: [
             {
                 label: "Likes in past photos ",
-                data: [1000, 1900, 3000, 1500, 1200, 3000],
+                data: likes,
                 backgroundColor: ["rgba(245,12,163,0.6)"],
 
                 borderColor: [
@@ -62,24 +84,20 @@ var myChart = new Chart(ctx, {
         },
     },
 });
-
+},200)
+setTimeout(function(){
 var ctx = document.getElementById("myChart1").getContext("2d");
 var myChart = new Chart(ctx, {
     type: "line",
 
     data: {
         labels: [
-            "12:04:2020",
-            "Blue",
-            "Yellow",
-            "Green",
-            "Purple",
-            "Orange",
+            "5 days ago","4 days ago","3 days ago","2 days ago","1 day ago","today"
         ],
         datasets: [
             {
                 label: "Total followers",
-                data: [10000, 2000, 3000, 50000, 70000, 123456],
+                data: followers,
                 backgroundColor: ["rgba(21,244,238,0.8)"],
 
                 borderColor: [
@@ -126,24 +144,20 @@ var myChart = new Chart(ctx, {
         },
     },
 });
-
+},200)
+setTimeout(function(){
 var ctx = document.getElementById("monthly_followers").getContext("2d");
 var myChart = new Chart(ctx, {
     type: "line",
 
     data: {
         labels: [
-            "12:04:2020",
-            "Blue",
-            "Yellow",
-            "Green",
-            "Purple",
-            "Orange",
+            "5 days ago","4 days ago","3 days ago","2 days ago","1 day ago","today"
         ],
         datasets: [
             {
                 label: "Total followers",
-                data: [10000, 2000, 3000, 50000, 70000, 123456],
+                data: monthly,
                 backgroundColor: ["rgba(245,224,42,0.8)"],
 
                 borderColor: [
@@ -190,7 +204,7 @@ var myChart = new Chart(ctx, {
         },
     },
 });
-
+},200)
 var ctx = document.getElementById("people_follow").getContext("2d");
 var myChart = new Chart(ctx, {
     type: "polarArea",
@@ -259,6 +273,6 @@ var myChart = new Chart(ctx, {
 
 
 
-
+});
 
 $(document).ready(function () { console.log("asjbasbfkjasfbkib ") })
