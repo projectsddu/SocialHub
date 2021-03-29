@@ -488,7 +488,7 @@ def delete_ac(request):
     ukey.save()
         
     sending_mail("Delete account on SocialHub","computerdummy960@gmail.com",cust_cur_user.email,"Use this key here","<h3>Your key to delete the account is:</h3><br><h1>"+str(secret_key)+"</h1><br>") 
-
+    print("After send mail")
     return render(request,"home/delete_ac_verify.html")    
 
 def delete_verify_ac(request):
@@ -498,8 +498,11 @@ def delete_verify_ac(request):
     if request.POST["key"]==str(user_key_objs.secret_key):
         cur_user.delete()
         user_key_objs.delete()
-        redirect("http://localhost:8000")
+        return redirect("http://localhost:8000")
         print("here")
+    else:
+        user_key_objs.delete()
+        return redirect("http://localhost:8000/home")
     
     
     # return render(request,"home/delete_ac_verify.html")
