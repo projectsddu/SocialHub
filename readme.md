@@ -17,24 +17,33 @@ and Keval Gandevia under the guidance of Prof Pinkal Chauhan,Prof Brijesh Bhatt,
 </ul>
 
 ## How to run the project:
-```shell
-________________________________________________________________________________________________
+---
 
-#Step 1
-requirement.txt
-________________________________________________________________________________________________
-#step2
+
+### Step 1
+requirement.txt  ----------------- pendin
+
+### Step2
 Go to https://download.docker.com/linux/ubuntu/dists/, choose your Ubuntu version, then browse to pool/stable/, choose amd64, armhf, or arm64, and download the .deb file for the Docker Engine version you want to install.
 
 $ sudo dpkg -i /path/to/package.deb
-________________________________________________________________________________________________
 
-#Step3
+
+### Step3
 docker run -p 6379:6379 -d redis:5
-________________________________________________________________________________________________
 
-#Step4 
+
+### Step4 
 python manage.py runserver
-________________________________________________________________________________________________
 
-```
+
+---
+---
+<h2><b>Why we used django channels</b></h2>
+The reason we used django channels was on normal implementation of chat feature had certain
+drawbacks like the new messages were only available on the reload of the page otherwise making
+multiple ajax calls was not a good idea as it increased the load on server . So we searched
+about realtime apps and we found that <b>WebSocket</b> was the thing we needed.
+Channels provide with the real time connection with the frontend . It updated the frontend
+as soon as 
+---
