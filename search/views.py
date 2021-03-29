@@ -29,6 +29,7 @@ def index(request):
         post_tmp['url']="http://localhost:8000/media/"+posts.photo_url
         post_tmp['likes']=len(likes.objects.filter(post_id=posts.post_id))
         post_tmp['comments']=300
+        # post_tmp["post_id"]=posts.post_id
         post_details['posts'].append(post_tmp)
     return render(request, "search/search.html",post_details)
 

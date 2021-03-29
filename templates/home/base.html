@@ -55,9 +55,17 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" style="" href="http://localhost:8000/home/profile">Profile</a>
+                <a class="dropdown-item" style="" href="http://localhost:8000/home/profile"><i class="far fa-id-badge"></i> Profile</a>
               </li>
-              <li><a class="dropdown-item" href="{% url 'chat_home' %}">Chat</a></li>
+              <li>
+                <a  
+                  class="dropdown-item"
+                  style=""
+                  href="http://localhost:8000/home/profile"
+                  > <i class="fas fa-cog"></i>
+                  Settings</a>
+              </li>
+              <li><a class="dropdown-item" href="{% url 'chat_home' %}"><i class="far fa-comment-alt"></i> Chat</a></li>
               <li>
                 <hr class="dropdown-divider" />
               </li>

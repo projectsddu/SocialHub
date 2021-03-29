@@ -18,6 +18,9 @@ urlpatterns = [
     path('/show_follwers/<slug:slug>',views.showFollowers,name="showfollowers"),
     path('/show_following/<slug:slug>',views.showFollowing,name="showfollowing"),
     path('/remove_notification',views.removeNotifications,name="remove_notification"),
+    path('/settings',views.settings,name="settings"),
+    path('/delete_ac',views.delete_ac,name="del_ac"),
+    path('/delete_ac_verify',views.delete_verify_ac,name="del_ac_verify"),
     
 ]
 

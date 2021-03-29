@@ -1,8 +1,9 @@
 import os
+import random
 from .models import post, likes
 from login.models import customuser
 from .forms import ImageFrom
-from .models import UploadImage, post, FriendRequest,Notifications,comments
+from .models import UploadImage, post, FriendRequest,Notifications,comments,user_secret_key
 from datetime import datetime,date
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -16,6 +17,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import operator
+from login.views import sending_mail
 
 def getPostByFollowings(current_user):
     
@@ -470,4 +472,38 @@ def removeNotifications(request):
     else:
         return HttpResponse("<h1>Page not found</h1>")
     
+
+def settings(request):
+    return render(request,"home/settings.html")
+
+def delete_ac(request):
+    cur_user=request.user
+    secret_key=random.randint(10000,99999)
+    # objs=user_secret_key.objects.filter(user_fk=cur_user)
+    cust_cur_user=customuser.objects.filter(user_inher=cur_user)[0]
+    
+        # Make new Key
+    ukey=user_secret_key(user_fk=cur_user,secret_key=secret_key)
+        
+    ukey.save()
+        
+    sending_mail("Delete account on SocialHub","computerdummy960@gmail.com",cust_cur_user.email,"Use this key here","<h3>Your key to delete the account is:</h3><br><h1>"+str(secret_key)+"</h1><br>") 
+
+    return render(request,"home/delete_ac_verify.html")    
+
+def delete_verify_ac(request):
+    cur_user=request.user
+    user_key_objs=user_secret_key.objects.filter(user_fk=cur_user).order_by("date_valid").reverse()[0]
+
+    if request.POST["key"]==str(user_key_objs.secret_key):
+        cur_user.delete()
+        user_key_objs.delete()
+        redirect("http://localhost:8000")
+        print("here")
+    
+    
+    # return render(request,"home/delete_ac_verify.html")
+
+
+   
 

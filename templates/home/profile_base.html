@@ -84,6 +84,15 @@
                     >Profile</a
                   >
                 </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    style=""
+                    href="http://localhost:8000/home/settings"
+                    > <i class="fas fa-cog"></i>
+                    Settings</a
+                  >
+                </li>
                 <li><a class="dropdown-item" href="#">Post a photo</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
@@ -134,7 +143,7 @@
 
         <div class="user-profile-data">
           <h1>{{user.get_username}}</h1>
-
+         
           {% if bio %}
           <p><i>{{bio}}</i></p>
           {% else %}
@@ -158,11 +167,11 @@
         {% if posts %} {% for post in posts %}
 
         <div class="col-4">
-          <img
+          <a href="{% url 'view_post' slug=post.post_id %}"><img
             src="{{post.photo_url}}"
             class="rounded-0 cover my-3 myimg"
             style="width: 220px; height: 220px"
-          />
+          /></a>
           <div class="mydiv">
             <div class="row">
               <div class="col-2" style="margin-right: 20px">

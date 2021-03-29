@@ -6,6 +6,7 @@ from home.views import getCommentsByPosts,getLikesByPost
 def view_post(request,slug):
     
     post_display = post.objects.filter(post_id=slug)[0]
+    post_caption=post_display.caption
     post_owner = post_display.user_fk.username
     photo_url = "http://localhost:8000/media/"+post_display.photo_url
     # print(post_url)
@@ -17,7 +18,8 @@ def view_post(request,slug):
         'likes': likes,
         'owner': post_owner,
         'date_added': post_display.date_posted,
-        'photo_url': photo_url
+        'photo_url': photo_url,
+        'caption':post_caption
     }
     if request.user.username==post_owner:
         return render(request,'ViewPost/index.html',display_dict)

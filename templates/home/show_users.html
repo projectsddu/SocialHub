@@ -183,11 +183,11 @@
           {% if posts %} {% for post in posts %}
 
           <div class="col-4">
-            <img
+            <a href="{% url 'view_post' slug=post.post_id %}"><img
               src="{{post.photo_url}}"
               class="rounded-0 cover my-3 myimg"
               style="width: 220px; height: 220px"
-            />
+            /></a>
             <div class="mydiv">
               <div class="row">
                 <div class="col-2" style="margin-right: 20px">

@@ -72,5 +72,10 @@ class Notifications(models.Model):
 
     def __str__(self):
         return self.notif_msg
+
+class user_secret_key(models.Model):
+    date_valid=models.DateTimeField(default=datetime.datetime.now())
+    user_fk=models.ForeignKey(User,on_delete=models.CASCADE)
+    secret_key=models.IntegerField()
     
     

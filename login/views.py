@@ -96,3 +96,12 @@ def forgot_password(request):
         msg.send()
         return HttpResponse("An email has sent to the registered email ID")
     return render(request,'login/forgot_password.html')
+
+
+def sending_mail(subject,from_email,to_email,text_content,html_content):
+    subject, from_email, to = subject, from_email, to_email
+    text_content = text_content
+    html_content = html_content
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()

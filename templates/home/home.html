@@ -24,7 +24,7 @@
       <div class="col-9" style="padding-left: 30px">
         <div class="col">
           <div class="row-6">
-            <b>{{i.owner}}</b>
+            <a href="{% url 'users' slug=i.owner %}" style="text-decoration: none;color:black"><b>{{i.owner}}</b></a>
           </div>
           <div class="row-6">
             <p style="font-size: 12px">{{i.location}}</p>
