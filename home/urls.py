@@ -20,6 +20,9 @@ urlpatterns = [
     path('/remove_notification',views.removeNotifications,name="remove_notification"),
     path('/settings',views.settings,name="settings"),
     path('/delete_ac',views.delete_ac,name="del_ac"),
+    path('/edit_post',views.edit_post,name="edit_post"),
+    path('/add_profile_image',views.add_profile_image,name="add_profile_image"),
+    path('/add_background_image',views.add_backround_image,name="add_background_image"),
     path('/delete_ac_verify',views.delete_verify_ac,name="del_ac_verify"),
     
 ]

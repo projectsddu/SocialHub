@@ -40,15 +40,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto mt-3 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active display-3" style="font-size: 20px" aria-current="page"
+            <a class="nav-link active display-3" style="font-size: 18px" aria-current="page"
               href="http://localhost:8000/home"><b style="color: aliceblue">Home</b></a>
           </li>
-          <li class="nav-item display-3 mx-3" style="font-size: 20px">
+          <li class="nav-item display-3 mx-3" style="font-size: 18px">
             <a class="nav-link active" href="home/add_post/"><b style="color: aliceblue">Post</b></a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active display-3" style="font-size: 18px" aria-current="page"
+              href="http://localhost:8000/chat/chat_home"><b style="color: aliceblue">Chat</b></a>
+          </li> 
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle display-3" href="#" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-expanded="false" style="font-size: 20px; color: aliceblue ;">
+              data-toggle="dropdown" aria-expanded="false" style="font-size: 18px; color: aliceblue ;">
               <div id="usnm">
                 <b style="color: aliceblue" id="loginuser">{% block user_name %}{% endblock user_name %}</b>
               </div>
@@ -61,7 +65,7 @@
                 <a  
                   class="dropdown-item"
                   style=""
-                  href="http://localhost:8000/home/profile"
+                  href="http://localhost:8000/home/settings"
                   > <i class="fas fa-cog"></i>
                   Settings</a>
               </li>

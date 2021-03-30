@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %}
+{% block feed %}
+<h2>Add profile image</h2>
+<div class="container " style="margin-left:200px;margin-top:100px">
+    <form method="POST" action="{% url 'add_profile_image' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+        {% for field in form %}
+            <label for="{{field.id_for_label}}" class="label display-3 mt-2" style="font-size:20px">
+            <b>{{field.html_name}}</b></label><br>
+            {{field}}<br>
+        {% endfor %}
+        <button class="btn btn-success mt-3">Save Image</button>
+    </form>
+</div>
+{% endblock feed %}
+
+
+{% block user_name %}{{user.get_username}}{% endblock user_name %}

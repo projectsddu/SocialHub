@@ -12,22 +12,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <a href="#"><tr>
           <th scope="row"><i class="far fa-edit"></i></th>
-          <td>Edit Post</td>
+          <td><a href="{% url 'edit_post' %}" style="text-decoration:none;color:white">Edit Post</a></td>
           
-        </tr>
+        </tr></a>
         <tr>
           <th scope="row"><i class="fas fa-exclamation-triangle"></i></th>
-          <td>Report Post</td>
+          <td><a href="#" style="text-decoration:none;color:white">Report Post</a></td>
           
         </tr>
         <tr>
+        
           <th scope="row"><i class="fas fa-trash"></i></th>
-          <td colspan="2">Delete Account</td>
+          <td colspan="2"><a href="{% url 'del_ac' %}" style="text-decoration:none;color:white">Delete Account</a></td>
           
         </tr>
       </tbody>
   </table>
+<!-- Pre styled web component desgined purely in html and css.     -->
 
 {% endblock feed %}

@@ -1,0 +1,15 @@
+{% extends 'home/base.html' %}
+{% block feed %}
+<h2>Add Background Image</h2>
+    <form method="POST"style="margin-left:200px;margin-top:100px" action="{% url 'add_background_image' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+        {% for field in form %}
+            <label for="{{field.id_for_label}}" class="label display-3 mt-2" style="font-size:20px">
+            <b>{{field.html_name}}</b></label><br>
+            {{field}}<br>
+        {% endfor %}
+        <button class="btn btn-success">Submit</button>
+    </form>
+{% endblock feed %}
+
+{% block user_name %}{{user.get_username}}{% endblock user_name %}

@@ -1,8 +1,9 @@
 import os
+from django.conf import settings as settings
 import random
 from .models import post, likes
 from login.models import customuser
-from .forms import ImageFrom
+from .forms import ImageFrom,UserProfilImage
 from .models import UploadImage, post, FriendRequest,Notifications,comments,user_secret_key
 from datetime import datetime,date
 from django.shortcuts import render, redirect
@@ -18,6 +19,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import operator
 from login.views import sending_mail
+
+def getPostByUser(user_obj):
+    posts=post.objects.filter(user_fk=user_obj).order_by("date_posted").reverse()
+    return posts
+
 
 def getPostByFollowings(current_user):
     
@@ -138,6 +144,7 @@ def index(request):
         current_user_profile = customuser.objects.filter(
             user_inher=current_user)
         user_image_url = "http://localhost:8000"+current_user_profile[0].Image.url
+        user_background_image_url = "http://localhost:8000/media/"+current_user_profile[0].Image_background.url
         # just send 3-4 comments over here and then make another app for viewing whole full page posts
         comments = [{'name': 'jenil', 'comment': 'Wow when did you go here'}, {
             'name': 'Kenil', 'comment': 'Take us also'}]
@@ -149,7 +156,7 @@ def index(request):
             final_bool = True
         print(current_user_profile)
         posts_to_show.append({'owner': owner, 'location': location, 'caption': caption, 'date': date_posted, 'likedby': likedby,
-                              'image_url': image_url, 'post_id': i.post_id, 'poster_image_url': user_image_url, 'comments': getCommentsByPosts(i), 'isliked': final_bool})
+                              'image_url': image_url,'user_background_image':user_background_image_url, 'post_id': i.post_id, 'poster_image_url': user_image_url, 'comments': getCommentsByPosts(i), 'isliked': final_bool})
         print(caption)
 
     user_details_dict = {
@@ -273,6 +280,7 @@ def profile(request):
     users_dict['following'] = getfollowing(prof_user.user_inher.username)
     users_dict['followers'] = getfollowers(prof_user.user_inher.username)
     users_dict['user_image'] = "http://localhost:8000"+prof_user.Image.url
+    users_dict['user_background_image'] = "http://localhost:8000"+prof_user.Image_background.url
     users_dict['posts'] = []
     for post1 in posts:
         user_post_obj = {}
@@ -315,6 +323,7 @@ def show_users(request, slug):
     user_dict['cur_user'] = var[0].username
     user_dict['is_followed'] = False
     user_dict['allowed'] = allowed
+    user_dict["background_image"]="http://localhost:8000"+prof_user.Image_background.url
     check_rln = FriendRequest.objects.raw("SELECT * FROM home_FriendRequest WHERE sender_username='"+str(
         req_username)+"' AND receiver_username='"+var[0].username+"'")
     
@@ -364,7 +373,7 @@ def add_post(request):
             user_post = post(user_fk=cur_user, photo_url=path, is_reported=False,
                              location=location, date_posted=datetime.date(datetime.now()), caption=caption)
             user_post.save()
-            tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+            # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
             return redirect("http://localhost:8000/home")
         else:
             print("invalid")
@@ -508,5 +517,67 @@ def delete_verify_ac(request):
     # return render(request,"home/delete_ac_verify.html")
 
 
-   
 
+
+def edit_post(request):
+    if request.method=="GET":
+        posts=getPostByUser(request.user)
+        ret_dict={}
+        ret_dict["post_data"]=[]
+        for i in posts:
+            ret_dict["post_data"].append(i)
+        print(ret_dict)
+        return render(request,'home/edit_post.html',ret_dict) 
+    else:
+        posts=getPostByUser(request.user)
+        for i in posts:
+            if str(i.post_id) in request.POST:
+                post_fetch=post.objects.filter(post_id=i.post_id)[0]
+                print(post_fetch)
+                post_fetch.delete()
+                notifcation=Notifications(notif_title="You deleted a post",notify_to=request.user,notif_msg="You deleted a post msg")
+                notifcation.save()
+        messages.add_message(request,messages.INFO,"You delted post")
+        return redirect("http://localhost:8000/home/profile")
+
+def add_profile_image(request):
+    print(request.method)
+    if request.method=="POST":
+        form = UserProfilImage(request.POST, request.FILES)
+        print("Herrrrrr")
+        if form.is_valid():
+            img = form.cleaned_data['Image']
+            timestamp = str(datetime.timestamp(datetime.now()))
+            path = default_storage.save(
+                'home/user_images/'+timestamp+'.jpg', ContentFile(img.read()))
+            # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+            print(path)
+            cust_user=customuser.objects.filter(user_inher=request.user)[0]
+            cust_user.Image=path
+            cust_user.save()
+            print("here")
+            return redirect("http://localhost:8000/home/profile")
+    print("jeni")
+    form=UserProfilImage()
+    return render(request,'home/profile_image.html',{'form':form})
+
+def add_backround_image(request):
+    print(request.method)
+    if request.method=="POST":
+        form = UserProfilImage(request.POST, request.FILES)
+        print("Herrrrrr")
+        if form.is_valid():
+            img = form.cleaned_data['Image']
+            timestamp = str(datetime.timestamp(datetime.now()))
+            path = default_storage.save(
+                'home/user_background_images/'+timestamp+'.jpg', ContentFile(img.read()))
+            # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+            print(path)
+            cust_user=customuser.objects.filter(user_inher=request.user)[0]
+            cust_user.Image_background=path
+            cust_user.save()
+            print("here")
+        return redirect("http://localhost:8000/home/profile")
+    print("jeni")
+    form=UserProfilImage()
+    return render(request,'home/backround_image.html',{'form':form})

@@ -136,7 +136,7 @@
         <div class="img-user-profile">
           <img
             class="profile-bgHome cover"
-            src="http://localhost:8000/media/home/post_images/ashim-d-silva-WeYamle9fDM-unsplash.jpg"
+            src="{{user_background_image}}"
           />
           <img class="avatar cover" src="{{user_image}}" alt="jofpin" />
         </div>
@@ -149,7 +149,16 @@
           {% else %}
           <p>No Bio</p>
           {% endif %}
+          <div class="row">
+            <div class="col-6">
+              <a href="{% url 'add_profile_image' %}"><button class="btn" style="margin-left:-170px">Add profile image</button></a>
+            </div>
+            <div class="col-6">
+              <a href="{% url 'add_background_image' %}"><button class="" style="border-radius:30px;border-radius: 0.6em 0 0 0.6em;">Add Background image</button></a>
+            </div>
+          </div>
         </div>
+        <br><br>
 
         <ul class="data-user">
           <li>

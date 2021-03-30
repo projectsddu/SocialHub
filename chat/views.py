@@ -110,12 +110,14 @@ def home(request):
     friend_list['followers'] = []
     friend_list['cur_user'] = slug
     for user in followers:
+        print(followers)
         cur_user = customuser.objects.filter(
             user_inher__username=user.receiver_username)[0]
         temp = {}
         temp['username'] = user.receiver_username
         temp['image'] = 'http://localhost:8000'+cur_user.Image.url
-        friend_list['followers'].append(temp)
-
+        if temp not in friend_list["following"]:
+            friend_list['followers'].append(temp)
+    # friend_list["followers"]=set(friend_list["followers"])
     print(friend_list)
     return render(request, 'chat/home.html', friend_list)
