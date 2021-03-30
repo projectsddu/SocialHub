@@ -43,6 +43,9 @@ def getSubscribersByChatRoom(room_id,cur_user):
 def index(request, slug):
     ret_dict=getMessagesByChatRoom(slug,request.user)
     ret_dict["chatter"],ret_dict["chatter_image"]=getSubscribersByChatRoom(slug,request.user)
+    user_obj = User.objects.filter(username=ret_dict["chatter"])[0]
+    cust_user = customuser.objects.filter(user_inher=user_obj)[0]
+    ret_dict["chatter_image"]=cust_user.Image.url
     print(ret_dict)
     if request.user not in getAllSubscribersByChatRoom(slug) :
         return HttpResponse("<h1>Sorry the page you requested does not exists</h1><br><h2>You are not authorized to go here</h2>")
@@ -96,8 +99,9 @@ def home(request):
     friend_list['following'] = []
     friend_list['cur_user'] = slug
     for user in followers:
-        cur_user = customuser.objects.filter(
-            user_inher__username=user.sender_username)[0]
+        cur_user = customuser.objects.filter(user_inher__username=user.sender_username)
+        cur_user=cur_user[0]
+        print(cur_user)
         temp = {}
         temp['username'] = user.sender_username
         temp['image'] = 'http://localhost:8000'+cur_user.Image.url

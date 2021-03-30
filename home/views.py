@@ -349,7 +349,7 @@ def show_users(request, slug):
         user_post_obj['post_id'] = p.post_id
         user_post_obj['likes'] = len(likes.objects.filter(post_id=p.post_id))
         # Add here one for comment
-        user_post_obj['comments'] = 30
+        user_post_obj['comments'] = getCommentsCount(p.post_id)
         user_dict['posts'].append(user_post_obj)
     # print(user_dict)
     return render(request, 'home/show_users.html', user_dict)
@@ -472,6 +472,8 @@ def showFollowing(request, slug):
 
 def logout_view(request):
     logout(request)
+    messages.add_message(request,messages.INFO,"Successfully Logged out!")
+    
     return redirect('http://localhost:8000/')
 
 @csrf_exempt

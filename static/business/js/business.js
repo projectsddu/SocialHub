@@ -93,7 +93,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: [
             "5 days ago","4 days ago","3 days ago","2 days ago","1 day ago","today"
-        ],
+        ].reverse(),
         datasets: [
             {
                 label: "Total followers",
@@ -153,7 +153,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: [
             "5 days ago","4 days ago","3 days ago","2 days ago","1 day ago","today"
-        ],
+        ].reverse(),
         datasets: [
             {
                 label: "Total followers",

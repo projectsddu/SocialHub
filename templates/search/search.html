@@ -10,7 +10,7 @@
 {% comment %} <form method="post" action="http://localhost:8000/search/search_query"> {% endcomment %}
 <div>
   {% csrf_token %}
-  <input type="text" name="search_query" class="form-control search_bar" style="width: 620px;" id="search_query" placeholder="Search the world">
+  <input type="text" name="search_query" class="form-control search_bar" style="width: 620px;text-decoration:none;color:black" id="search_query" placeholder="Search the world">
   <label for="floatingInput" name="search_query" class="gradient-text">Search by username or id</label>
 {% comment %} </form> {% endcomment %}
 </div>
