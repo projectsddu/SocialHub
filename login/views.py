@@ -11,7 +11,12 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 
 
-
+def check_empty(username, city, country, bio, email, password):
+    
+    if username == '' or city == '' or country == '' or bio == '' or email == '' or password == '':
+        return True
+    else:
+        return False
 
 def login(request):
     return render(request,'login/base.html')
@@ -29,13 +34,16 @@ def login_user(request):
             print("jenil logged in")
             return redirect('http://localhost:8000/home')
         else:
-            print("check login or password details")
-    return HttpResponse("4040")
+            messages.warning(request,'Wrong Username or Password')
+            return render(request,'login/base.html')
+    # return redirect('http://localhost:8000')
 
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
+        
+        # check username is exist or not.
         
         if check_user_name(username) != None:
             messages.warning(request,'Username is already taken!!!')
@@ -44,12 +52,23 @@ def signup(request):
         country = request.POST.get('country')
         bio = request.POST.get('bio')
         password = request.POST.get('password')
+        email = request.POST.get('email')
         #check both are same or not
         c_password = request.POST.get('c_password')
+
+        # check empty or not
+        if check_empty(username, city, country, bio, email, password):
+            messages.warning(request,'Fields can not be Empty!!!')
+            return render(request,'login/signup.html')
         #print(username, city, country, bio, password, c_password)
+
+        if check_password(password, c_password) == False:
+            messages.warning(request,'Passwords are not matching!!!!')
+            return render(request,'login/signup.html')
+
         user = User.objects.create_user(username, 'lennon@thebeatles.com', password)
         user.save()
-        custom_user = customuser (city_of_residence = city, country_of_residence = country, bio = bio, user_inher = user)
+        custom_user = customuser (city_of_residence = city, country_of_residence = country, bio = bio, user_inher = user, email=email)
         custom_user.save()
         user = authenticate(request,username=username, password=password)
         if user is not None:

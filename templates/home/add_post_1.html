@@ -4,14 +4,15 @@
 <h1>JENIL GANDHI</h1>
 {% block user_name %} {{user.get_username}} {% endblock user_name %}
 {% block feed %}
-<div class="container" style="margin-left:11    0px;margin-top:120px">
-    <h3>Post a photo</h3>
+<div class="container gradient-text" style="margin-left:110px;margin-top:60px">
+    <h1>Add Post</h1>
+    <hr>
 </div>
 <form action="http://localhost:8000/home/add_post/" method = "post" enctype="multipart/form-data"> 
         {% csrf_token %} 
         <div style="margin-left:120px">
         {% for field in form %}
-            <label for="{{field.id_for_label}}" class="label display-3 mt-2" style="font-size:20px">
+            <label for="{{field.id_for_label}}" class="label display-3 mt-2 gradient-text-1" style="font-size:20px">
             <b>{{field.html_name}}</b></label><br>
             {{field}}<br>
         {% endfor %}

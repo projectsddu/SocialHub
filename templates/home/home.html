@@ -39,7 +39,7 @@
         <li><a style="text-decoration:none;color:black" href="http://localhost:8000/view_post/{{i.post_id}}" class="copyLink" onclick="copyToClipboard()"><b>Share Post:</b></a><br>Use this link to share the post<br>http://localhost:8000{% url 'view_post' slug=i.post_id %}</li>
         <li class="divider"></li>
         <hr>
-        <li><a style="text-decoration:none;color:black" href="http://localhost:8000/view_post/{{i.post_id}}"><b>View post</b></a></li>
+        <li><a style="text-decoration:none;color:black" href="http://localhost:8000/view_post/{{i.post_id}}"><b>View Post</b></a></li>
         <li class="divider"></li>
       </ul>
     </div> 
@@ -48,7 +48,7 @@
     </div>
     <img
       src="http://localhost:8000/media/{{i.image_url}}"
-      style="height: {{i.image_url.height}}px"
+      style="height: {{i.image_url.height}}px;"
       class="card-img-top rounded-0"
       alt="..."
     />
@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="row-2">Liked By <b>{{i.likedby}}</b></div>
-        <div class="caption row-2">{{i.caption}}</div>
+        <div class="caption row-2"> <b>{{i.owner}} </b>: {{i.caption}}</div>
         <div class="commentsslide row-2" id="comment{{i.post_id}}">
           <ul class="list-group" id="commentlist{{i.post_id}}">
             {% if i.comments %} {% for comment in i.comments %}

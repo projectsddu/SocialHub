@@ -93,12 +93,12 @@
                     Settings</a
                   >
                 </li>
-                <li><a class="dropdown-item" href="#">Post a photo</a></li>
+                <li><a class="dropdown-item" href="http://localhost:8000/home/add_post">Add Post</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                   <a
                     class="dropdown-item"
-                    href="http://localhost:8000/home/logout"
+                    href="http://localhost:8000/home/logout" 
                     >Logout</a
                   >
                 </li>
@@ -151,10 +151,10 @@
           {% endif %}
           <div class="row">
             <div class="col-6">
-              <a href="{% url 'add_profile_image' %}"><button class="btn" style="margin-left:-170px">Add profile image</button></a>
+              <a href="{% url 'add_profile_image' %}"><button class="btn" style="margin-left:-170px">Add Profile Image</button></a>
             </div>
             <div class="col-6">
-              <a href="{% url 'add_background_image' %}"><button class="" style="border-radius:30px;border-radius: 0.6em 0 0 0.6em;">Add Background image</button></a>
+              <a href="{% url 'add_background_image' %}"><button class="" style="border-radius:30px;border-radius: 0.6em 0 0 0.6em;">Add Background Image</button></a>
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@
             <a href="{% url 'showfollowers' slug=user.get_username %}"><strong>{{followers}}</strong><span>Followers</span></a>
           </li>
           <li>
-            <a href="{% url 'showfollowing' slug=user.get_username %}"><strong>{{following}}</strong><span>Following</span></a>
+            <a href="{% url 'showfollowing' slug=user.get_username %}"><strong>{{following}}</strong><span>Followings</span></a>
           </li>
         </ul>
       </div>
@@ -186,7 +186,7 @@
               <div class="col-2" style="margin-right: 20px">
                 <i class="fas fa-heart fa-lg">{{post.likes}}</i>
               </div>
-              <div class="col-1"><i class="fas fa-comment fa-lg">13</i></div>
+              <div class="col-1"><i class="fas fa-comment fa-lg">{{post.comments}}</i></div>
             </div>
           </div>
         </div>

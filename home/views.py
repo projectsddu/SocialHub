@@ -31,7 +31,7 @@ def getPostByFollowings(current_user):
     cur_user = User.objects.filter(username = current_user)[0]
     # print(cur_user)
     post_list = []
-    own_post = post.objects.filter(user_fk = cur_user, date_posted = date.today())
+    own_post = post.objects.filter(user_fk = cur_user, date_posted = date.today()).order_by('post_id').reverse()
     
     # print(own_post)
     for f in followings:
@@ -90,6 +90,10 @@ def getLikesByPost(post_obj, cur_user,option=False):
         return "You and "+str(like_count-1)+" other"
     return str(like_count)+" people"
 
+def getCommentsCount(post_id):
+    coms = comments.objects.filter(post_id=post_id)
+    comments_count = len(coms)
+    return comments_count
 
 def get_notifs(user):
     query=Notifications.objects.filter(notify_to=user).order_by('date_added').reverse()
@@ -146,8 +150,6 @@ def index(request):
         user_image_url = "http://localhost:8000"+current_user_profile[0].Image.url
         user_background_image_url = "http://localhost:8000/media/"+current_user_profile[0].Image_background.url
         # just send 3-4 comments over here and then make another app for viewing whole full page posts
-        comments = [{'name': 'jenil', 'comment': 'Wow when did you go here'}, {
-            'name': 'Kenil', 'comment': 'Take us also'}]
         quer = likes.objects.filter(post_id=i.post_id, liker_user=user_name)
         final_bool = False
         if len(quer) == 0:
@@ -290,7 +292,8 @@ def profile(request):
         user_post_obj['likes'] = len(
             likes.objects.filter(post_id=post1.post_id))
         # Add here one for comment
-        user_post_obj['comments'] = 30
+        user_post_obj['comments'] = getCommentsCount(post1.post_id)
+        
         users_dict['posts'].append(user_post_obj)
     print(users_dict)
     return render(request, 'home/profile_base.html', users_dict)

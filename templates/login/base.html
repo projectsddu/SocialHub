@@ -20,7 +20,9 @@
     <h3 class="mt-3" >SocialHub</h3>
     <br>
     
-
+    {% if messages %} {% for msg in messages %} <div class="alert alert-danger" role="alert">
+      <b> {{ msg }} </b>
+    </div> {% endfor %}{% endif %}
     <!-- Icon -->
     
     <h2 class="active"> Sign In </h2>
@@ -28,7 +30,7 @@
     <form method="post" action="http://localhost:8000/login_user">
       {% csrf_token %}
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
       <input type="submit" class="fadeIn fourth" value="Log In" id="sub_btn">
     </form>
 

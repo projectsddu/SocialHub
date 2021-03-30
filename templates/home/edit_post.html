@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %}
 {% block user_name %}{{user.get_username}}{% endblock user_name %}
 {% block feed %}
-<h2 class="mt-3">Select posts to delete</h2><hr>
+<h2 class="mt-3 gradient-text">Select Posts to Delete</h2><hr>
 <form method="POST" action="{% url 'edit_post' %}">
 {% csrf_token %}
 <div class="list-group">
@@ -16,10 +16,10 @@
             <div class="col-5">
                 <div class="col">
                     <div class="row-2">
-                        <b>Caption:</b>{{i.caption}}
+                        <b>Caption: </b>{{i.caption}}
                     </div>
                     <div class="row-2">
-                        <b>location:</b>{{i.location}}
+                        <b>Location: </b>{{i.location}}
                     </div>
                 </div>
             </div>

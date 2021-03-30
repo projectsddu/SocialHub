@@ -11,17 +11,17 @@
     <title>Confirm Delete</title>
   </head>
   <body>
-  <div class="container">
+  <div class="container mt-3">
   <p>Enter below the secret key we sent you on your registered email address</p>
     <form action="http://localhost:8000/home/delete_ac_verify" method="POST">
     {% csrf_token %}
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Secret verification key</label>
+    <label for="exampleInputEmail1" class="form-label">Enter Secret Verification Key</label>
     <input type="text" class="form-control" id="exampleInputEmail1" name="key" aria-describedby="emailHelp">
     
   </div>
   
-  <button type="submit" class="btn btn-primary">Delete account</button>
+  <button type="submit" class="btn btn-primary">Delete Account</button>
 </form>
 </div>
     <!-- Optional JavaScript; choose one of the two! -->
