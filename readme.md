@@ -1,3 +1,4 @@
+
 # SocialHub 
 
 
@@ -47,3 +48,9 @@ about realtime apps and we found that <b>WebSocket</b> was the thing we needed.
 Channels provide with the real time connection with the frontend . It updated the frontend
 as soon as 
 ---
+
+## SocialHub - A Social Media Website
+# SocialHub
+## Our main project is in current resository itself.
+### for lab experiment follow this link: https://github.com/projectsddu/Lab_Experiment
+
