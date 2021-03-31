@@ -1,27 +1,86 @@
 //Jquery Here
 $(document).ready(function () {
+    
+    $(".notification").click(function(){
+        var id=this.id;
+        console.log("id:"+id);
+        var saveData = $.ajax({
+            type: 'POST',
+            url: "http://localhost:8000/home/remove_notification",
+            data: {'notif_id' : id},
+            dataType: "text",
+
+            success: function () {
+                console.log("success");
+                }
+        });
+        saveData.error=function(){
+            alert("kxcksncks");
+        }
+
+    })
+    $('.fr_accept').click(function(){
+        console.log("accept")
+        //call accept function
+        var id=this.id
+        console.log(id)
+        var element=document.getElementById(id);
+        console.log(element);
+        var parent_id=id.slice(6,id.length);
+        var parent_elem=document.getElementById(parent_id);
+        console.log(parent_elem);
+        
+        // Ajax call to add friend request object status to true
+        var saveData = $.ajax({
+            type: 'POST',
+            url: "http://127.0.0.1:8000/home/add_friend_status/",
+            data: {'sender_username' : parent_id, 'rec_name' : document.getElementById("loginuser").innerText,'option':'accept'},
+            dataType: "text",
+
+            success: function () {
+                parent_elem.remove();
+                }
+        });
+        saveData.error=function(){
+            alert("kxcksncks");
+        }
+    })
+    $('.fr_reject').click(function(){
+        console.log("reject")
+        var id=this.id
+        console.log(id)
+        var element=document.getElementById(id);
+        console.log(element);
+        var parent_id=id.slice(6,id.length);
+        var parent_elem=document.getElementById(parent_id);
+        console.log(parent_elem);
+        console.log("popopo")
+        var saveData = $.ajax({
+            type: 'POST',
+            url: "http://127.0.0.1:8000/home/add_friend_status/",
+            data: {'sender_username' : parent_id, 'rec_name' : document.getElementById("loginuser").innerText,'option':'reject'},
+            dataType: "text",
+
+            success: function () {
+                console.log("Success deleting")
+                parent_elem.remove();
+                }
+        });
+        saveData.error=function(){
+            alert("kxcksncks");
+        }
+    })
     $('.commentsslide').slideUp(1)
     $('.comment').click(
         function () {
             var id = this.id
             id = String(id)
             var final_id = id.match(/\d+/g);
-            console.log(final_id[0]);
+            
             var myKeyVals = { 'post_id': this.id }
 
             $('#' + 'comment' + final_id[0]).slideToggle(400)
-            var saveData = $.ajax({
-                type: 'POST',
-                url: "http://127.0.0.1:8000/home/comments/",
-                data: myKeyVals,
-                dataType: "text",
-                success: function (resultData) { 
-                    console.log(JSON.parse(resultData)['comments']);
-                    var commentdata=JSON.parse(resultData)['comments']
-                    
-                }
-            });
-            saveData.error(function () { alert("Something went wrong"); });
+            
         }
     )
 

@@ -6,6 +6,7 @@ from login.models import customuser
 from django.views.decorators.csrf import csrf_exempt
 import json
 import datetime
+from home.views import getCommentsCount
 
 def check_datetime(obj):
     if len(str(obj))==1:
@@ -28,7 +29,8 @@ def index(request):
         posts=post.objects.filter(post_id=i.post_id.post_id)[0]
         post_tmp['url']="http://localhost:8000/media/"+posts.photo_url
         post_tmp['likes']=len(likes.objects.filter(post_id=posts.post_id))
-        post_tmp['comments']=300
+        post_tmp['comments']=getCommentsCount(i.post_id.post_id)
+        # post_tmp["post_id"]=posts.post_id
         post_details['posts'].append(post_tmp)
     return render(request, "search/search.html",post_details)
 

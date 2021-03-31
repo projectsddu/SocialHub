@@ -1,9 +1,18 @@
 {% extends 'home/base.html' %} {% block feed %}
-
-<div class="container" style="font-family:'Roboto'">
-  {% comment %} {{posts}} {% endcomment %}
-  {% for i in posts %}
-  <div class="card cont" id="pid{{i.post_id}}" style="margin-top: 20px;margin-bottom: 20px;background-color: #fafafa;width: 570px">
+{% load humanize %}
+{% load static %}
+<div class="container" style="font-family: 'Roboto'">
+  {% comment %} {{posts}} {% endcomment %} {% if posts %} {% for i in posts %}
+  <div
+    class="card cont"
+    id="pid{{i.post_id}}"
+    style="
+      margin-top: 20px;
+      margin-bottom: 20px;
+      background-color: #fafafa;
+      width: 570px;
+    "
+  >
     <div class="row" style="height: 60px; padding: 10px">
       <div class="col-1">
         <img
@@ -15,17 +24,31 @@
       <div class="col-9" style="padding-left: 30px">
         <div class="col">
           <div class="row-6">
-            <b>{{i.owner}}</b>
+            <a href="{% url 'users' slug=i.owner %}" style="text-decoration: none;color:black"><b>{{i.owner}}</b></a>
           </div>
           <div class="row-6">
             <p style="font-size: 12px">{{i.location}}</p>
+            
           </div>
         </div>
       </div>
+      <div class="col-2">
+        <div class="dropdown ml-4 mt-1" >
+      <a class="dropdown-toggle" data-toggle="dropdown" style="text-decoration:none;color:black" href="#"><svg aria-hidden="true" focusable="false"  data-prefix="fas" data-icon="ellipsis-v" style="height:25px" class="svg-inline--fa fa-ellipsis-v fa-w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path></svg></a>
+      <ul style="width:300px" class="dropdown-menu" role="menu" aria-labelledby="dLabel">            
+        <li><a style="text-decoration:none;color:black" href="http://localhost:8000/view_post/{{i.post_id}}" class="copyLink" onclick="copyToClipboard()"><b>Share Post:</b></a><br>Use this link to share the post<br>http://localhost:8000{% url 'view_post' slug=i.post_id %}</li>
+        <li class="divider"></li>
+        <hr>
+        <li><a style="text-decoration:none;color:black" href="http://localhost:8000/view_post/{{i.post_id}}"><b>View Post</b></a></li>
+        <li class="divider"></li>
+      </ul>
+    </div> 
+      </div>
+      
     </div>
     <img
       src="http://localhost:8000/media/{{i.image_url}}"
-      style="height: {{i.image_url.height}}px"
+      style="height: {{i.image_url.height}}px;"
       class="card-img-top rounded-0"
       alt="..."
     />
@@ -36,12 +59,11 @@
             <div class="heart col-1">
               <i
                 id="heart{{i.post_id}}"
-                {% if i.isliked %}
-                  class="heart_target fas fa-heart fa-lg"
-                {% else %}
-                  class="heart_target far fa-heart fa-lg"
-                {% endif %}
-                
+                {%if i.isliked%}
+                class="heart_target fas fa-heart fa-lg"
+                {%else%}
+                class="heart_target far fa-heart fa-lg"
+                {%endif%}
               ></i>
             </div>
             <div class="comment col-1 fa-lg" id="post{{i.post_id}}">
@@ -50,25 +72,23 @@
           </div>
         </div>
         <div class="row-2">Liked By <b>{{i.likedby}}</b></div>
-        <div class="caption row-2">
-          {{i.caption}}
-        </div>
+        <div class="caption row-2"> <b>{{i.owner}} </b>: {{i.caption}}</div>
         <div class="commentsslide row-2" id="comment{{i.post_id}}">
           <ul class="list-group" id="commentlist{{i.post_id}}">
-            
-            {% if i.comments %}
-              {% for comment in i.comments %}
-            
+            {% if i.comments %} {% for comment in i.comments %}
 
             <li class="list-group-item">
-              <p style="margin-top:3px;margin-bottom:3px"><b>{{comment.name}}</b> {{comment.comment}}</p>
+              <p style="margin-top: 3px; margin-bottom: 3px">
+                <b>{{comment.commentor}}</b> {{comment.msg}}
+              </p>
             </li>
-            {% endfor %}
-              
             
-            {% endif %}
+            {% endfor %}
+            <a href="{% url 'view_post' slug=i.post_id %}" style="text-decoration:none"><p style="margin-left:15px" class="mt-2">View All comments</p></a>
+            {% else %}
+            <b>No comments Yet</b>
+             {% endif %}
           </ul>
-         
         </div>
       </div>
     </div>
@@ -93,9 +113,125 @@
       </div>
     </form>
   </div>
-  {% endfor %}
-  
+  {% endfor %} {% else %}
+  <div class="card text-center mt-3">
+    <div class="card-header" style="background-color: #353839; color: white">
+      Sorry No feed yet
+    </div>
+    <div class="card-body" style="background-color: #4a4a4a; color: white">
+      <h5 class="card-title">
+        Follow your favourite friends and Stars to get the feed
+      </h5>
+      <p class="card-text">
+        You would surely love it try using SocialHub expanding your engagement
+        and expand your business with us
+      </p>
+      <a
+        href="http://localhost:8000/search"
+        class="btn"
+        style="background-color: pink; color: black"
+        >Search your friends</a
+      >
+    </div>
+    <div style="background-color: #353839" class="card-footer text-muted">
+      <p style="color: white; height: 7px">Today</p>
+    </div>
+  </div>
+  {% endif %}
 </div>
-{% endblock feed %} {% block user_name %} {{name}} {% endblock user_name %}
-{% block title %}Home
-{% endblock title %}
+{% endblock feed %} {% block user_name %} {{name}} {% endblock user_name %} {%block title %}Home {% endblock title %} 
+
+
+
+
+
+
+{% block sugg %} 
+<div class="col">
+
+<div class="card mt-3 row" style="width: 19rem;padding-right:20px">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item bg-dark" style="color:white"><b>Notifications</b><button class="btn btn-light mx-3 rounded-circle" style="width:33px;height:33px;color:white;background-color:#c13584;border:1px solid #c13584">{{notif|length}}</button></li>
+{% if notif %}
+
+    
+  <div class="mt-3">
+  {% for notification in notif %}
+  
+    {% comment %} <li class="list-group-item"> {% endcomment %}
+    {% comment %} <div>
+      <b>{{notification.title}} {{notification.date|naturalday}}</b><br><br> 
+      <p>{{notification.message}}</p>
+    </div> {% endcomment %}
+    <div class="alert design_alert alert-dismissible fade show" style="width:270px" role="alert">
+      <strong >{{notification.title}} {{notification.date|naturalday}}</strong> 
+      <button  id="{{notification.id}}" type="button" class="notification btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    {% comment %} </li> {% endcomment %}
+
+  {% endfor %}
+  </div>
+  </ul>
+  
+{% else %} 
+<div class="alert design_alert alert-dismissible fade show mt-3" style="width:270px" role="alert">
+  <strong>No Notifications</strong> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+ {% endif %}
+<div class="card-footer">
+    Notifications get updated on activity and gets deleted after one day
+  </div>
+</div>
+</div>
+
+
+
+<div class="card mt-3 row" style="width: 19rem;padding-right:20px">
+  <ul class="list-group list-group-flush friend_reqs" id="fr_lists">
+    <li class="list-group-item bg-dark" style="color:white;background-color:#b8b8b8"><b>Follow Request</b><button class="btn btn-light mx-3 rounded-circle" style="width:33px;height:33px;color:white;background-color:#c13584;border:1px solid #c13584">{{pendings|length}}</button></li>
+{% if pendings %}
+
+    
+  
+  {% for fr in pendings %}
+  
+    <li class="list-group-item frobj" id="{{fr.sender_name}}">
+    <div>
+      <b>{{fr.sender_name}} </b>wants to follow You
+      <div class="row">
+      
+        <div class="col-6">
+          <button class="btn btn-success fr_accept" id="fr_ac_{{fr.sender_name}}">Confirm</button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-danger fr_reject" id="fr_rj_{{fr.sender_name}}">Delete</button>
+        </div>
+       
+      </div>
+    </div>  
+    </li>
+  
+  {% endfor %}
+  </ul>
+  
+{% else %} 
+<div class="alert design_alert alert-dismissible fade show mt-3" style="width:270px" role="alert">
+  <strong>No friend request till now</strong> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+ {% endif %}
+<div class="card-footer">
+    Most recent requests appear on the top
+  </div>
+</div>
+</div>
+
+
+
+</div>
+ {% endblock sugg %}
+{% block ads %}
+  
+{% endblock ads %}

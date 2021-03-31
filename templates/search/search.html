@@ -10,7 +10,7 @@
 {% comment %} <form method="post" action="http://localhost:8000/search/search_query"> {% endcomment %}
 <div>
   {% csrf_token %}
-  <input type="text" name="search_query" class="form-control search_bar" id="search_query" placeholder="Search the world">
+  <input type="text" name="search_query" class="form-control search_bar" style="width: 620px;text-decoration:none;color:black" id="search_query" placeholder="Search the world">
   <label for="floatingInput" name="search_query" class="gradient-text">Search by username or id</label>
 {% comment %} </form> {% endcomment %}
 </div>
@@ -20,11 +20,12 @@
 </div>
 <hr>
 <h2 class="gradient-text">See what's trending</h2>
-<div class="row">
+<div class="row ml-4">
+{% if posts %}
 {% for famous in posts %}
   
   <div class="col">
-          <img
+        <img
             src="{{famous.url}}"
             class="rounded-0 cover my-3 myimg"
             style="width: 220px; height: 220px">
@@ -37,7 +38,20 @@
           </div>
         </div>
 {% endfor %}
-
+{% else %}
+<div class="card text-center">
+  <div class="card-header" style="background-color:#353839;color:white">Trending stories would appear here</div>
+  <div class="card-body" style="background-color:#4a4a4a;color:white">
+    <h5 class="card-title"></h5>
+    <p class="card-text">
+      Wanna be on the trending page gather likes and comments and we would find out you!
+      While we set up what's trending checkout your friends
+    </p>
+    <a href="http://localhost:8000/search" class="btn" style="background-color:pink;color:black">Search your friends</a>
+  </div>
+  <div class="card-footer text-muted" style="background-color:#353839;"><p style="color:white;height:7px">Today</p></div>
+</div>
+{% endif %}
 </div>
 {% endblock feed %}
 {% block css_links %}

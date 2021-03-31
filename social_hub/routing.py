@@ -4,7 +4,7 @@ from django.urls import path
 from chat import consumer
 
 websocketURLs=[
-    path('ws/chat/jenil_keval',consumer.Chatconsumer.as_asgi())
+    path('ws/chat/<slug:room_name>',consumer.Chatconsumer.as_asgi())
 
 ]
 application=ProtocolTypeRouter({

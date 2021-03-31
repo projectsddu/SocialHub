@@ -1,0 +1,47 @@
+{% extends 'business_dashboard/dashboard_base.html' %} {% block items %}
+
+<div class="col-6" style="color: white">
+<h2>Advertise new product</h2
+  <form>
+    <input type="text" placeholder="Product name" />
+    <input type="text" placeholder="Product description" />
+    <input type="text" placeholder="Price" />
+    <label>Shipping</label><br /><br />
+    <div class="radio">
+      <input id="value3" type="radio" name="radio2" />
+      <label for="value3">Intercity</label>
+    </div>
+    <div class="radio">
+      <input id="value4" type="radio" name="radio2" />
+      <label for="value4">Nationally</label>
+    </div>
+    <div class="radio">
+      <input id="value5" type="radio" name="radio2" />
+      <label for="value5">Worldwide</label>
+    </div>
+    <textarea placeholder="Tags of audience"></textarea>
+    <input type="submit" value="Send" />
+  </form>
+</div>
+<div class="col-4" style="color: white">
+<div class=" col-12 mx-3">
+            <div class="side_container">
+            <h2>Past orders:</h2>
+            <ul>
+                
+                <li><div>
+                    <p>Product 1</p>
+                    <div>
+                        <button class="btn btn-warning">Children</button>
+                    </div>
+                </div></li>
+                <li class="mt-2"><div>
+                    <p>Product 1</p>
+                    <div>
+                        <button class="btn btn-warning">Children</button>
+                    </div>
+                </div></li>
+            </ul>
+            </div>
+</div>
+{% endblock items %}
