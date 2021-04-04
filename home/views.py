@@ -34,16 +34,20 @@ def getPostByFollowings(current_user):
     own_post = post.objects.filter(user_fk = cur_user, date_posted = date.today()).order_by('post_id').reverse()
     
     # print(own_post)
-    for f in followings:
-        username = User.objects.filter(username = f.receiver_username)[0]
-        posts = post.objects.filter(user_fk = username)
-        for p in posts:
-            post_list.append(p)
+    if len(followings)==0:
+        for f in followings:
+            username = User.objects.filter(username = f.receiver_username)[0]
+            posts = post.objects.filter(user_fk = username)
+            for p in posts:
+                post_list.append(p)
             
-    post_list.sort(reverse = True)
-    if len(own_post) != 0:
-        own_post = own_post[0]
-        post_list.insert(0,own_post)
+        post_list.sort(reverse = True)
+        if len(own_post) != 0:
+            own_post = own_post[0]
+            post_list.insert(0,own_post)
+    
+    else:
+        post_list=[]
     return post_list
     
 
