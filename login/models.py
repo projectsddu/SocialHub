@@ -10,3 +10,7 @@ class customuser(models.Model):
     user_inher=models.ForeignKey(User,on_delete=models.CASCADE)
     email=models.CharField(max_length=150,default="not@provided.com")
 
+    def __str__(self):
+        return self.user_inher.username
+    
+
