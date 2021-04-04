@@ -22,7 +22,7 @@ and Keval Gandevia under the guidance of Prof Pinkal Chauhan,Prof Brijesh Bhatt,
 
 
 ### Step 1
-requirement.txt  ----------------- pendin
+requirement.txt  
 
 ### Step2
 Go to https://download.docker.com/linux/ubuntu/dists/, choose your Ubuntu version, then browse to pool/stable/, choose amd64, armhf, or arm64, and download the .deb file for the Docker Engine version you want to install.
